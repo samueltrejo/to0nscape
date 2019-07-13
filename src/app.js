@@ -43,12 +43,12 @@ class App extends React.Component {
           <React.Fragment>
             <Switch>
               <PublicRoute path="/home" component={Home} authed={authed} />
+              <PublicRoute path="/leaderboards" component={Leaderboards} authed={authed} />
 
               <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} />
               <PrivateRoute path="/profile" component={Profile} authed={authed} />
               <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} />
               <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} />
-              <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} />
 
               <Redirect from="*" to="/home" />
             </Switch>
