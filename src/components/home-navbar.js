@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class HomeNavbar extends React.Component {
   render() {
@@ -60,8 +61,8 @@ class HomeNavbar extends React.Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                {authed ? (<span className="nav-item nav-link">Profile</span>) : ('')}
-                <span className="nav-item nav-link">Leaderboards</span>
+                {authed ? (<Link to="/profile" className="nav-item nav-link">Profile</Link>) : ('')}
+                <Link to="/leaderboards" className="nav-item nav-link">Leaderboards</Link>
                 {authed ? (<span className="nav-item nav-link">Logout</span>) : ('')}
                 {!authed ? (<span className="nav-item nav-link">Sign In</span>) : ('')}
               </div>
