@@ -40,21 +40,21 @@ class HomeNavbar extends React.Component {
                 </ol>
                 <div className="carousel-inner">
                   <div className="carousel-item active">
-                    <img src="https://i.imgur.com/oSCGWEt.jpg" className="carousel-image d-block w-100" alt="..." />
+                    <img src="https://i.imgur.com/oSCGWEt.jpg" className="carousel-image d-block w-100" alt="by JESHOOTS.COM on Unsplash" />
                     <div className="carousel-caption d-none d-md-block">
                       <h5>First slide label</h5>
                       <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                     </div>
                   </div>
                   <div className="carousel-item">
-                    <img src="https://i.imgur.com/tYvpx9E.jpg" className="carousel-image d-block w-100" alt="..." />
+                    <img src="https://i.imgur.com/tYvpx9E.jpg" className="carousel-image d-block w-100" alt="by Sean Do on Unsplash" />
                     <div className="carousel-caption d-none d-md-block">
                       <h5>Second slide label</h5>
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                     </div>
                   </div>
                   <div className="carousel-item">
-                    <img src="https://i.imgur.com/TddKAM6.jpg" className="carousel-image d-block w-100" alt="..." />
+                    <img src="https://i.imgur.com/TddKAM6.jpg" className="carousel-image d-block w-100" alt="by Florian Olivo on Unsplash" />
                     <div className="carousel-caption d-none d-md-block">
                       <h5>Third slide label</h5>
                       <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
@@ -75,7 +75,7 @@ class HomeNavbar extends React.Component {
 
           <div className="backdrop position-absolute"></div>
 
-          <div className="Navbar container position-absolute p-5">
+          <div className="HomeNavbar container position-absolute p-5">
             <Link to="/home" className="navbar-brand">To0nscape</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
