@@ -1,7 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+import $ from 'jquery';
 
 class HomeNavbar extends React.Component {
+  componentDidMount() {
+    $('.carousel').carousel({
+      interval: 5000,
+    });
+  }
+
+  login = (event) => {
+    event.preventDefault();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
+  }
+
+  logout = (event) => {
+    event.preventDefault();
+    firebase.auth().signOut();
+  }
+
   render() {
     const { authed } = this.props;
 
@@ -54,17 +75,17 @@ class HomeNavbar extends React.Component {
 
           <div className="backdrop position-absolute"></div>
 
-          <div className="container position-absolute p-5">
-            <span className="navbar-brand">To0nscape</span>
+          <div className="Navbar container position-absolute p-5">
+            <Link to="/home" className="navbar-brand">To0nscape</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
                 {authed ? (<Link to="/profile" className="nav-item nav-link">Profile</Link>) : ('')}
-                <Link to="/leaderboards" className="nav-item nav-link">Leaderboards</Link>
-                {authed ? (<span className="nav-item nav-link">Logout</span>) : ('')}
-                {!authed ? (<span className="nav-item nav-link">Sign In</span>) : ('')}
+                {authed ? (<Link to="/leaderboards" className="nav-item nav-link">Leaderboards</Link>) : ('')}
+                {authed ? (<span className="nav-item nav-link" onClick={this.logout}>Logout</span>) : ('')}
+                {!authed ? (<span className="nav-item nav-link" onClick={this.login}>Sign In</span>) : ('')}
               </div>
             </div>
           </div>

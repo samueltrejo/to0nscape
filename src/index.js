@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import bootstrap from 'bootstrap'; // eslint-disable-line no-unused-vars
+
 import './styles/index.scss';
 import App from './app';
 import * as serviceWorker from './serviceWorker';
