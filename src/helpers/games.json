@@ -1,0 +1,23 @@
+[
+  {
+    "id": "game1",
+    "name": "Block Matrix",
+    "link": "/blockmatrix-startscreen",
+    "image": "https://i.imgur.com/CxuchPv.jpg",
+    "description": "Dodge the obstacles, see how long you can survive!"
+  },
+  {
+    "id": "game2",
+    "name": "Battleship",
+    "link": "/battleship",
+    "image": "https://i.imgur.com/CxuchPv.jpg",
+    "description": "Strategy game against a computer, try to destroy all of the cpu's ships."
+  },
+  {
+    "id": "game3",
+    "name": "Click Maestro",
+    "link": "/clickmaestro",
+    "image": "https://i.imgur.com/CxuchPv.jpg",
+    "description": "A clicking game, see how many times you can click your mouse before the time runs out."
+  }
+]

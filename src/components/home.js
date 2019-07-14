@@ -1,5 +1,8 @@
 import React from 'react';
+
 import HomeNavbar from './home-navbar';
+import HomeGames from './home-games';
+import Footer from './footer';
 
 class Home extends React.Component {
   render() {
@@ -7,6 +10,8 @@ class Home extends React.Component {
     return (
       <div>
         <HomeNavbar authed={authed} />
+        <HomeGames />
+        <Footer />
       </div>
     );
   }
