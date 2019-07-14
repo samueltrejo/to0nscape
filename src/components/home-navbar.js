@@ -1,7 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 class HomeNavbar extends React.Component {
+  login = (event) => {
+    event.preventDefault();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
+  }
+
+  logout = (event) => {
+    event.preventDefault();
+    firebase.auth().signOut();
+  }
+
   render() {
     const { authed } = this.props;
 
@@ -62,9 +75,9 @@ class HomeNavbar extends React.Component {
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
                 {authed ? (<Link to="/profile" className="nav-item nav-link">Profile</Link>) : ('')}
-                <Link to="/leaderboards" className="nav-item nav-link">Leaderboards</Link>
-                {authed ? (<span className="nav-item nav-link">Logout</span>) : ('')}
-                {!authed ? (<span className="nav-item nav-link">Sign In</span>) : ('')}
+                {authed ? (<Link to="/leaderboards" className="nav-item nav-link">Leaderboards</Link>) : ('')}
+                {authed ? (<span className="nav-item nav-link" onClick={this.logout}>Logout</span>) : ('')}
+                {!authed ? (<span className="nav-item nav-link" onClick={this.login}>Sign In</span>) : ('')}
               </div>
             </div>
           </div>

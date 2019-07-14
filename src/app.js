@@ -5,6 +5,10 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+import initFirebase from './helpers/firebase-init';
 
 import Home from './components/home';
 import NewProfile from './components/new-profile';
@@ -15,23 +19,39 @@ import Leaderboards from './components/leaderboards';
 
 import './styles/app.scss';
 
+initFirebase();
+
 const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === false
-    ? (<Component {...props} />)
+    ? (<Component authed={authed} {...props} />)
     : (<Redirect to={{ pathname: '/home', state: { from: props.location } }} />));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
 const PrivateRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === true
-    ? (<Component {...props} />)
-    : (<Redirect to={{ pathname: '/home', state: { from: props.location } }} />));
+    ? (<Component authed={authed} {...props} />)
+    : (<Redirect to={{ pathname: '/auth', state: { from: props.location } }} />));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
 
 class App extends React.Component {
   state = {
     authed: false,
+  }
+
+  componentDidMount() {
+    this.removeListener = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ authed: true });
+      } else {
+        this.setState({ authed: false });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.removeListener();
   }
 
   render() {
@@ -42,15 +62,16 @@ class App extends React.Component {
         <BrowserRouter>
           <React.Fragment>
             <Switch>
-              <PublicRoute path="/home" component={Home} authed={authed} />
-              <PublicRoute path="/leaderboards" component={Leaderboards} authed={authed} />
+              <PublicRoute path="/auth" component={Home} authed={authed} />
+              <PrivateRoute path="/home" component={Home} authed={authed} />
 
+              <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} />
               <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} />
               <PrivateRoute path="/profile" component={Profile} authed={authed} />
               <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} />
               <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} />
 
-              <Redirect from="*" to="/home" />
+              <Redirect from="*" to="/auth" />
             </Switch>
           </React.Fragment>
         </BrowserRouter>

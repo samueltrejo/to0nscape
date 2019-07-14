@@ -3,9 +3,10 @@ import HomeNavbar from './home-navbar';
 
 class Home extends React.Component {
   render() {
+    const { authed } = this.props;
     return (
       <div>
-        <HomeNavbar />
+        <HomeNavbar authed={authed} />
       </div>
     );
   }
