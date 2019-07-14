@@ -1,9 +1,14 @@
 import React from 'react';
 
+import Navbar from './navbar';
+
 class NewProfile extends React.Component {
   render() {
     return (
-      <div className="NewProfile">New Profile</div>
+      <div className="NewProfile">
+        <Navbar />
+        <h3>New Profile</h3>
+      </div>
     );
   }
 }
