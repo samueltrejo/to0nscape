@@ -3,7 +3,15 @@ import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
+import $ from 'jquery';
+
 class HomeNavbar extends React.Component {
+  componentDidMount() {
+    $('.carousel').carousel({
+      interval: 5000,
+    });
+  }
+
   login = (event) => {
     event.preventDefault();
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -67,8 +75,8 @@ class HomeNavbar extends React.Component {
 
           <div className="backdrop position-absolute"></div>
 
-          <div className="container position-absolute p-5">
-            <span className="navbar-brand">To0nscape</span>
+          <div className="Navbar container position-absolute p-5">
+            <Link to="/home" className="navbar-brand">To0nscape</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
