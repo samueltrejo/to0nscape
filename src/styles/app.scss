@@ -1,5 +1,5 @@
 body {
-  background-color: aquamarine;
+  background-color: whitesmoke;
 }
 
 .carousel-image  {
@@ -7,7 +7,7 @@ body {
 }
 
 .backdrop {
-  background-image: linear-gradient(180deg,#91e7db,#505a78);
+  background-image: linear-gradient(180deg,whitesmoke,#505a78);
   height: 100%;
   width: 100%;
   opacity: 0.7;
@@ -15,4 +15,18 @@ body {
 
 .HomeNavbar {
   z-index: 2;
+}
+
+.fs-2 {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.box-shadow {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.box-shadow:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
