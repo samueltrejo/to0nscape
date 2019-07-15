@@ -7,7 +7,7 @@ import games from '../helpers/games.json';
 class HomeGames extends React.Component {
   render() {
     const writeGameCards = games.map(game => (
-      <GameCards game={game} />
+      <GameCards key={game.id} game={game} />
     ));
     return (
       <div className="HomeGames container">
