@@ -11,6 +11,10 @@ class Profile extends React.Component {
     profile: {},
   }
 
+  redirectToHome = () => {
+    this.props.history.push('/home');
+  }
+
   componentDidMount() {
     const { uid } = firebase.auth().currentUser;
     profileData.getMyProfile(uid)
@@ -22,7 +26,7 @@ class Profile extends React.Component {
     const { profile } = this.state;
     return (
       <div>
-        {Object.keys(profile).length ? ('') : (<NewProfile />)}
+        {Object.keys(profile).length ? ('') : (<NewProfile redirectToHome={this.redirectToHome} />)}
       </div>
     );
   }

@@ -9,4 +9,6 @@ const getMyProfile = uid => new Promise((resolve, reject) => {
     .catch(error => reject(error));
 });
 
-export default { getMyProfile };
+const createProfile = profile => axios.post(`${databaseUrl}/profiles.json`, profile);
+
+export default { getMyProfile, createProfile };
