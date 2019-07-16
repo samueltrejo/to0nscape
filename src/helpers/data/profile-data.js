@@ -5,7 +5,7 @@ const databaseUrl = fbconfig.databaseURL;
 
 const getMyProfile = uid => new Promise((resolve, reject) => {
   axios.get(`${databaseUrl}/profiles.json?orderBy="uid"&equalTo="${uid}"`)
-    .then(response => resolve(Object.values(response.data)))
+    .then(response => resolve(Object.values(response.data)[0]))
     .catch(error => reject(error));
 });
 
