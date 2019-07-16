@@ -27,7 +27,6 @@ class NewProfile extends React.Component {
   stateProfileChange = (type, event) => {
     const newProfileCopy = { ...this.state.newProfile };
     newProfileCopy[type] = event.target.value;
-    console.error(newProfileCopy);
     this.setState({ newProfile: newProfileCopy });
   }
 

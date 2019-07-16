@@ -13,7 +13,7 @@ class Profile extends React.Component {
   }
 
   redirectToHome = () => {
-    this.props.history.push('/home');
+    this.props.history.push('/profile');
   }
 
   componentDidMount() {
