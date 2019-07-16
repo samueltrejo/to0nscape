@@ -9,26 +9,30 @@ import MyProfile from './my-profile';
 
 class Profile extends React.Component {
   state = {
-    profile: {},
+    profile: [],
   }
 
   redirectToHome = () => {
     this.props.history.push('/home');
   }
 
-  componentDidMount() {
+  getMyProfile = () => {
     const { uid } = firebase.auth().currentUser;
     profileData.getMyProfile(uid)
       .then(profile => this.setState({ profile }))
       .catch(error => console.error(error));
   }
 
+  componentDidMount() {
+    this.getMyProfile();
+  }
+
   render() {
     const { profile } = this.state;
     return (
       <div>
-        {Object.keys(profile).length ? ('') : (<NewProfile redirectToHome={this.redirectToHome} />)}
-        {Object.keys(profile).length ? (<MyProfile redirectToHome={this.redirectToHome} profile={profile} />) : ('')}
+        {profile.length ? ('') : (<NewProfile getMyProfile={this.getMyProfile} redirectToHome={this.redirectToHome} />)}
+        {profile.length ? (<MyProfile getMyProfile={this.getMyProfile} profile={profile[0]} />) : ('')}
       </div>
     );
   }

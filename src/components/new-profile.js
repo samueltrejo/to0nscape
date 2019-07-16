@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
@@ -20,7 +21,7 @@ class NewProfile extends React.Component {
     const profile = { ...this.state.newProfile };
     profile.uid = firebase.auth().currentUser.uid;
     profileData.createProfile(profile)
-      .then(() => this.props.redirectToHome())
+      .then(() => this.props.getMyProfile())
       .catch(error => console.error(error));
   }
 
@@ -38,7 +39,6 @@ class NewProfile extends React.Component {
 
   render() {
     const { username, image, bio } = this.state;
-    const { updateUsername, updateImage, updateBio, createProfile } = this;
 
     return (
       <div className="NewProfile">
@@ -53,11 +53,14 @@ class NewProfile extends React.Component {
                   <div className="col-md-6">
                     <div className="card-body text-center mx-5">
                       <h5 className="lead font-weight-bold mb-5 text-center">Create Profile</h5>
-                      <form onSubmit={createProfile}>
-                        <input type="text" className="form-control mb-4" placeholder="Username" value={username} onChange={updateUsername} />
-                        <input type="text" className="form-control mb-4" placeholder="Profile Picture" value={image} onChange={updateImage} />
-                        <textarea className="form-control mb-4" rows="4" placeholder="Bio" value={bio} onChange={updateBio}></textarea>
-                        <button type="submit" className="btn btn-dark px-3"><i className="fas fa-address-card pr-1"></i> Create</button>
+                      <form onSubmit={this.createProfile}>
+                        <input type="text" className="form-control mb-4" placeholder="Username" value={username} onChange={this.updateUsername} />
+                        <input type="text" className="form-control mb-4" placeholder="Profile Picture" value={image} onChange={this.updateImage} />
+                        <textarea className="form-control mb-4" rows="4" placeholder="Bio" value={bio} onChange={this.updateBio}></textarea>
+                        <div>
+                          <button type="submit" className="btn btn-dark px-3 mr-3"><i className="fas fa-address-card pr-1"></i> Create</button>
+                          <Link to="/home" className="btn btn-dark px-3"><i className="fas fa-address-card pr-1"></i> Back to Home</Link>
+                        </div>
                       </form>
                     </div>
                   </div>

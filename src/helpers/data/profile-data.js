@@ -12,7 +12,7 @@ const getMyProfile = uid => new Promise((resolve, reject) => {
           response.data[profileKey].id = profileKey;
           profile.push(response.data[profileKey]);
         });
-        resolve(profile[0]);
+        resolve(profile);
       }
     })
     .catch(error => reject(error));
@@ -22,4 +22,11 @@ const createProfile = profile => axios.post(`${databaseUrl}/profiles.json`, prof
 
 const updateProfile = (profileId, profile) => axios.put(`${databaseUrl}/profiles/${profileId}.json`, profile);
 
-export default { getMyProfile, createProfile, updateProfile };
+const deleteProfile = profileId => axios.delete(`${databaseUrl}/profiles/${profileId}.json`);
+
+export default {
+  getMyProfile,
+  createProfile,
+  updateProfile,
+  deleteProfile,
+};
