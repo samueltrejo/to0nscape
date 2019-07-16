@@ -20,4 +20,6 @@ const getMyProfile = uid => new Promise((resolve, reject) => {
 
 const createProfile = profile => axios.post(`${databaseUrl}/profiles.json`, profile);
 
-export default { getMyProfile, createProfile };
+const updateProfile = (profileId, profile) => axios.put(`${databaseUrl}/profiles/${profileId}.json`, profile);
+
+export default { getMyProfile, createProfile, updateProfile };

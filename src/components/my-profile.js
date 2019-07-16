@@ -13,7 +13,9 @@ class MyProfile extends React.Component {
   updateProfile = (event) => {
     event.preventDefault();
     const profileCopy = { ...this.state.profile };
-    profileData.updateProfile(profileCopy)
+    const profileId = profileCopy.id;
+    delete profileCopy.id;
+    profileData.updateProfile(profileId, profileCopy)
       .then(() => this.props.redirectToHome())
       .catch(error => console.error(error));
   }
@@ -39,8 +41,7 @@ class MyProfile extends React.Component {
   updateBio = event => this.stateProfileChange('bio', event)
 
   render() {
-    const { edit } = this.state;
-    const { profile } = this.props;
+    const { profile, edit } = this.state;
     return (
       <div>
         <Navbar />
@@ -68,7 +69,7 @@ class MyProfile extends React.Component {
               <div className="card-body">
                 {edit ? (<input type="text" className="form-control mb-4" placeholder="Username" value={profile.username} onChange={this.updateUsername} />)
                   : (<p className="lead">{profile.username}</p>)}
-                {edit ? (<input type="text" className="form-control mb-4" placeholder="Bio" value={profile.bio} onChange={this.updateUsername} />)
+                {edit ? (<input type="text" className="form-control mb-4" placeholder="Bio" value={profile.bio} onChange={this.updateBio} />)
                   : (<p className="lead">{profile.bio}</p>)}
               </div>
             </div>
