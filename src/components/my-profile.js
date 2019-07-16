@@ -10,13 +10,22 @@ class MyProfile extends React.Component {
     profile: this.props.profile,
   }
 
+  deleteProfile = () => {
+    profileData.deleteProfile(this.props.profile.id)
+      .then(() => this.props.getMyProfile())
+      .catch(error => console.error(error));
+  }
+
   updateProfile = (event) => {
     event.preventDefault();
     const profileCopy = { ...this.state.profile };
     const profileId = profileCopy.id;
     delete profileCopy.id;
     profileData.updateProfile(profileId, profileCopy)
-      .then(() => this.props.redirectToHome())
+      .then(() => {
+        this.props.getMyProfile();
+        this.cancelEditState();
+      })
       .catch(error => console.error(error));
   }
 
@@ -54,7 +63,8 @@ class MyProfile extends React.Component {
               </div>)
               : (
               <div className="edit-profile position-absolute">
-                <button className="btn btn-dark" onClick={this.initiateEditState}>Edit Profile</button>
+                <button className="btn btn-dark mr-3" onClick={this.initiateEditState}>Edit Profile</button>
+                <button className="btn btn-dark" data-toggle="modal" data-target="#delete-confirmation" onClick={this.openConfirmDelete}>Delete Profile</button>
               </div>
               )}
         </div>
@@ -86,8 +96,21 @@ class MyProfile extends React.Component {
           </div>
         </div>
 
-
-        <div></div>
+        <div id="delete-confirmation" className="modal fade">
+          <div className="modal-dialog">
+            <div className="modal-content ">
+              <h1 className="display-4 mx-auto mb-0 mt-3">Confirm</h1>
+              <div className="modal-body">
+                <div className="text-center">Are you sure you want to delete your profile?</div>
+                <div className="text-center text-black-50">You won't be able to play games without a profile.</div>
+              </div>
+              <div className="modal-footer justify-content-center">
+                <button id="start-game" type="button" className="btn btn-dark" data-dismiss="modal" onClick={this.deleteProfile}>Yes</button>
+                <button id="start-game" type="button" className="btn btn-dark" data-dismiss="modal">Nooo!</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
