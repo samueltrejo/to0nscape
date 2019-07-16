@@ -5,6 +5,7 @@ import 'firebase/auth';
 import profileData from '../helpers/data/profile-data';
 
 import NewProfile from './new-profile';
+import MyProfile from './my-profile';
 
 class Profile extends React.Component {
   state = {
@@ -27,6 +28,7 @@ class Profile extends React.Component {
     return (
       <div>
         {Object.keys(profile).length ? ('') : (<NewProfile redirectToHome={this.redirectToHome} />)}
+        {Object.keys(profile).length ? (<MyProfile redirectToHome={this.redirectToHome} profile={profile} />) : ('')}
       </div>
     );
   }
