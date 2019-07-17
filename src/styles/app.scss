@@ -62,8 +62,14 @@ a.btn {
 }
 
 .player {
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
   left: 50%;
   bottom: 0;
+}
+
+.obstacle {
+  height: 16px;
+  width: 32px;
+  top: 0px;
 }
