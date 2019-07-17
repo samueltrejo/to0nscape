@@ -61,6 +61,14 @@ a.btn {
   -webkit-appearance: none;
 }
 
+.h-16 {
+  height: 16px;
+}
+
+.border {
+  top: 100%;
+}
+
 .player {
   height: 16px;
   width: 16px;
@@ -68,8 +76,13 @@ a.btn {
   bottom: 0;
 }
 
+.obstacles-container {
+  height: 16px;
+  top: -16px;
+}
+
 .obstacle {
   height: 16px;
-  width: 32px;
-  top: 0px;
+  // width: 32px;
+  // border: 1px solid white;
 }

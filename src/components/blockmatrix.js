@@ -2,6 +2,10 @@ import React from 'react';
 import $ from 'jquery';
 
 class BlockMatrix extends React.Component {
+  state = {
+    obstacles: [],
+  }
+
   getDefaultValues = () => {
     const gameScreenWidth = parseInt($('.game-screen').width(), 10);
     const playerPos = gameScreenWidth / 2;
@@ -41,19 +45,53 @@ class BlockMatrix extends React.Component {
     }
   }
 
+  setObstaclePos = (event) => {
+    const obstaclePos = event.target.dataset.value;
+    console.error(obstaclePos);
+  }
+
   generateObstacles = () => {
     const obstacles = [];
-    const amountObstacles = this.gameDefaultValues.gameScreenWidth / 32;
-    const obstaclePos = parseFloat(32 / this.gameDefaultValues.gameScreenWidth).toFixed(2);
-    // return { amountObstacles, obstacleWidth };
+    const obstacleIds = [];
+    const amountObstacles = this.gameDefaultValues.gameScreenWidth / 100;
 
     for (let i = 0; i < amountObstacles; i += 1) {
-      $(`#obstacle${i}`).css('left', `${obstaclePos * i}%`);
-      obstacles.push(<div id={`obstacle${i}`} className="obstacle bg-info position-absolute"></div>);
+      const obstacleId = `obstacle${i}`;
+      obstacles.push(
+        <div key={obstacleId} className="h-16 w-100 position-relative">
+          <div id={obstacleId} className="obstacle w-100 bg-info position-absolute"></div>
+        </div>,
+      );
+      obstacleIds.push(obstacleId);
     }
 
-    return obstacles;
+    this.gameDefaultValues.obstacleIds = obstacleIds;
+    this.setState({ obstacles });
   }
+
+  randomObstacle = () => {
+    const randomNum = Math.floor(Math.random() * this.gameDefaultValues.obstacleIds.length);
+    const obstacle = this.gameDefaultValues.obstacleIds[randomNum];
+    return obstacle;
+  }
+
+  dropObject = (object) => {
+    const obstaclePos = $(`#${object}`).css('top');
+    const border = $('.border').css('top');
+    console.error(obstaclePos, parseInt(border, 10) + 16);
+    if (obstaclePos === '0px' || obstaclePos === `${parseInt(border, 10) + 16}px`) {
+      for (let i = 0; i <= (parseInt(border, 10) + 16); i += 1) {
+        setTimeout(() => {
+          $(`#${object}`).css('top', `${i}px`);
+        }, 5 * i);
+      }
+    }
+  }
+
+  launchObstacles = () => {
+    const obstacle = this.randomObstacle();
+    this.dropObject(obstacle);
+  };
 
   componentDidMount() {
     this.gameDefaultValues = {
@@ -61,16 +99,17 @@ class BlockMatrix extends React.Component {
       playerPos: 0,
       moveStateLeft: false,
       moveStateRight: false,
-      amountObstacles: 0,
-      obstacleWidth: '',
+      obstacleIds: [],
     };
 
     this.getDefaultValues();
-    // this.generateObstacles();
+    this.generateObstacles();
 
-    this.movePlayerInterval = setInterval(this.updatePlayerPos, 10);
     $('body').on('keydown', this.movePlayer);
     $('body').on('keyup', this.stopPlayer);
+
+    this.movePlayerInterval = setInterval(this.updatePlayerPos, 10);
+    this.setObstaclesInterval = setInterval(this.launchObstacles, 100);
   }
 
   componentWillUnmount() {
@@ -82,17 +121,13 @@ class BlockMatrix extends React.Component {
   render() {
     return (
       <div className="BlockMatrix p-5 vh-100">
-        <div className="game-screen h-100 bg-dark position-relative">
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
-          <div className="obstacle bg-info position-absolute"></div>
+        {console.error('test')}
+        <div className="game-screen h-100 bg-dark position-relative overflow-hidden">
+          <div className="border obstacle bg-info position-absolute"></div>
+
+          <div className="obstacles-container w-100 d-flex position-absolute">
+            {this.state.obstacles}
+          </div>
 
           <div className="player bg-white position-absolute"></div>
         </div>
