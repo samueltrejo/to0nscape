@@ -53,7 +53,7 @@ class BlockMatrix extends React.Component {
   generateObstacles = () => {
     const obstacles = [];
     const obstacleIds = [];
-    const amountObstacles = this.gameDefaultValues.gameScreenWidth / 100;
+    const amountObstacles = this.gameDefaultValues.gameScreenWidth / 32;
 
     for (let i = 0; i < amountObstacles; i += 1) {
       const obstacleId = `obstacle${i}`;
