@@ -29,16 +29,9 @@ class BlockMatrix extends React.Component {
     this.setScoreInterval = setInterval(this.updateScore, 1000);
   }
 
-  gameOver = () => {
-    clearInterval(this.movePlayerInterval);
-    clearInterval(this.setObstaclesInterval);
-    clearInterval(this.setScoreInterval);
-    $('body').off('keydown', this.movePlayer);
-    $('body').off('keyup', this.stopPlayer);
-  }
-
   launchGame = () => {
     $('.announcer').fadeIn();
+    $('.announcer').html('3');
     setTimeout(() => $('.announcer').html('2'), 1000);
     setTimeout(() => $('.announcer').html('1'), 2000);
     setTimeout(() => {
@@ -46,6 +39,26 @@ class BlockMatrix extends React.Component {
       $('.announcer').fadeOut();
       this.startGame();
     }, 3000);
+  }
+
+  gameOver = () => {
+    clearInterval(this.movePlayerInterval);
+    clearInterval(this.setObstaclesInterval);
+    clearInterval(this.setScoreInterval);
+    $('body').off('keydown', this.movePlayer);
+    $('body').off('keyup', this.stopPlayer);
+
+    this.endGameScreen();
+    $('.announcer').fadeIn();
+  }
+
+  endGameScreen = () => {
+    const endGameInfo = '<div>You Lose!</div><div class="d-flex"><button class="save-score btn btn-outline-light ml-auto mr-3">Save Your Score</button><button class="retry btn btn-outline-light">Try Again</button></div>';
+    $('.announcer').html(endGameInfo);
+    $('.save-score').off('click', this.saveScore);
+    $('.retry').off('click', this.launchGame);
+    $('.save-score').on('click', this.saveScore);
+    $('.retry').on('click', this.launchGame);
   }
 
   getDefaultValues = () => {
@@ -119,7 +132,6 @@ class BlockMatrix extends React.Component {
   dropObstacle = (obstacle) => {
     const obstaclePos = parseInt($(obstacle).css('top'), 10);
     const border = parseInt($('.border').css('top'), 10) + 16;
-    console.error(obstaclePos, border);
     if (obstaclePos === -16 || obstaclePos >= border) {
       for (let i = 0; i <= border; i += 1) {
         setTimeout(() => {
@@ -161,6 +173,13 @@ class BlockMatrix extends React.Component {
   updateScore = () => {
     this.gameDefaultValues.score += 1;
     $('.score').text(this.gameDefaultValues.score);
+  }
+
+  saveScore = () => {
+    $('.save-score').off('click', this.saveScore);
+    $('.retry').off('click', this.launchGame);
+    const { score } = this.gameDefaultValues;
+    console.error(score);
   }
 
   componentDidMount() {
