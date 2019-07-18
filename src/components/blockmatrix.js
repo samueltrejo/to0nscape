@@ -13,17 +13,42 @@ class BlockMatrix extends React.Component {
     this.gameDefaultValues.playerPos = playerPos;
   }
 
+  gameOver = () => {
+    console.error('game over');
+  }
+
+  getDimensions = (target) => {
+    const dimensions = {
+      lx: $(target).position().left,
+      ty: $(target).position().top,
+      rx: $(target).position().left + $(target).width(),
+      by: $(target).position().top + $(target).height(),
+    };
+    console.error(target, dimensions)
+    return dimensions;
+  };
+
+  collisionCheck = () => {
+    const pd = this.getDimensions('.player');
+    this.gameDefaultValues.obstacleIds.forEach((obstacleId) => {
+      const od = this.getDimensions(obstacleId);
+      if (pd.lx < od.rx && pd.ty < od.by && pd.by > od.ty) {
+        console.error('game over');
+      }
+    });
+  }
+
   updatePlayerPos = () => {
     let { playerPos } = this.gameDefaultValues;
     if (this.gameDefaultValues.moveStateRight) {
       playerPos += 5;
       this.gameDefaultValues.playerPos = playerPos;
     }
-
     if (this.gameDefaultValues.moveStateLeft) {
       playerPos -= 5;
       this.gameDefaultValues.playerPos = playerPos;
     }
+    this.collisionCheck();
     $('.player').css('left', `${playerPos}px`);
   };
 
@@ -45,15 +70,10 @@ class BlockMatrix extends React.Component {
     }
   }
 
-  setObstaclePos = (event) => {
-    const obstaclePos = event.target.dataset.value;
-    console.error(obstaclePos);
-  }
-
   generateObstacles = () => {
     const obstacles = [];
     const obstacleIds = [];
-    const amountObstacles = this.gameDefaultValues.gameScreenWidth / 32;
+    const amountObstacles = this.gameDefaultValues.gameScreenWidth / 128;
 
     for (let i = 0; i < amountObstacles; i += 1) {
       const obstacleId = `obstacle${i}`;
@@ -62,7 +82,7 @@ class BlockMatrix extends React.Component {
           <div id={obstacleId} className="obstacle w-100 bg-info position-absolute"></div>
         </div>,
       );
-      obstacleIds.push(obstacleId);
+      obstacleIds.push(`#${obstacleId}`);
     }
 
     this.gameDefaultValues.obstacleIds = obstacleIds;
@@ -75,15 +95,15 @@ class BlockMatrix extends React.Component {
     return obstacle;
   }
 
-  dropObject = (object) => {
-    const obstaclePos = $(`#${object}`).css('top');
-    const border = $('.border').css('top');
-    console.error(obstaclePos, parseInt(border, 10) + 16);
-    if (obstaclePos === '0px' || obstaclePos === `${parseInt(border, 10) + 16}px`) {
-      for (let i = 0; i <= (parseInt(border, 10) + 16); i += 1) {
+  dropObject = (obstacle) => {
+    const obstaclePos = parseInt($(obstacle).css('top'), 10);
+    const border = parseInt($('.border').css('top'), 10) + 16;
+    // console.error(obstaclePos, border);
+    if (obstaclePos === 0 || obstaclePos >= border) {
+      for (let i = 0; i <= border; i += 1) {
         setTimeout(() => {
-          $(`#${object}`).css('top', `${i}px`);
-        }, 5 * i);
+          $(obstacle).css('top', `${i}px`);
+        }, 2 * i);
       }
     }
   }
@@ -121,7 +141,6 @@ class BlockMatrix extends React.Component {
   render() {
     return (
       <div className="BlockMatrix p-5 vh-100">
-        {console.error('test')}
         <div className="game-screen h-100 bg-dark position-relative overflow-hidden">
           <div className="border obstacle bg-info position-absolute"></div>
 
