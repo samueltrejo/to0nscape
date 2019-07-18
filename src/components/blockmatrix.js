@@ -6,6 +6,61 @@ class BlockMatrix extends React.Component {
     obstacles: [],
   }
 
+  // GAME PREPARATION
+
+  startGame = () => {
+    this.gameDefaultValues = {
+      gameScreenWidth: 0,
+      playerPos: 0,
+      moveStateLeft: false,
+      moveStateRight: false,
+      obstacleIds: [],
+      score: 0,
+    };
+
+    this.getDefaultValues();
+    this.generateObstacles(64);
+
+    $('body').on('keydown', this.movePlayer);
+    $('body').on('keyup', this.stopPlayer);
+
+    this.movePlayerInterval = setInterval(this.updatePlayerPos, 10);
+    this.setObstaclesInterval = setInterval(this.launchObstacles, 100);
+    this.setScoreInterval = setInterval(this.updateScore, 1000);
+  }
+
+  launchGame = () => {
+    $('.announcer').fadeIn();
+    $('.announcer').html('3');
+    setTimeout(() => $('.announcer').html('2'), 1000);
+    setTimeout(() => $('.announcer').html('1'), 2000);
+    setTimeout(() => {
+      $('.announcer').html('GO');
+      $('.announcer').fadeOut();
+      this.startGame();
+    }, 3000);
+  }
+
+  gameOver = () => {
+    clearInterval(this.movePlayerInterval);
+    clearInterval(this.setObstaclesInterval);
+    clearInterval(this.setScoreInterval);
+    $('body').off('keydown', this.movePlayer);
+    $('body').off('keyup', this.stopPlayer);
+
+    this.endGameScreen();
+    $('.announcer').fadeIn();
+  }
+
+  endGameScreen = () => {
+    const endGameInfo = '<div>You Lose!</div><div class="d-flex"><button class="save-score btn btn-outline-light ml-auto mr-3">Save Your Score</button><button class="retry btn btn-outline-light">Try Again</button></div>';
+    $('.announcer').html(endGameInfo);
+    $('.save-score').off('click', this.saveScore);
+    $('.retry').off('click', this.launchGame);
+    $('.save-score').on('click', this.saveScore);
+    $('.retry').on('click', this.launchGame);
+  }
+
   getDefaultValues = () => {
     const gameScreenWidth = parseInt($('.game-screen').width(), 10);
     const playerPos = gameScreenWidth / 2;
@@ -13,41 +68,40 @@ class BlockMatrix extends React.Component {
     this.gameDefaultValues.playerPos = playerPos;
   }
 
-  gameOver = () => {
-    console.error('game over');
+  generateObstacles = (width) => {
+    const obstacles = [];
+    const obstacleIds = [];
+    const amountObstacles = this.gameDefaultValues.gameScreenWidth / width;
+
+    for (let i = 0; i < amountObstacles; i += 1) {
+      const obstacleId = `obstacle${i}`;
+      const obstacleCSS = {
+        left: `${parseFloat(width * i).toFixed(2)}px`,
+        width,
+      };
+      obstacles.push(<div key={obstacleId} id={obstacleId} className="obstacle bg-info position-absolute" style={obstacleCSS}></div>);
+      obstacleIds.push(`#${obstacleId}`);
+    }
+
+    this.gameDefaultValues.obstacleIds = obstacleIds;
+    this.setState({ obstacles });
   }
 
-  getDimensions = (target) => {
-    const dimensions = {
-      lx: $(target).position().left,
-      ty: $(target).position().top,
-      rx: $(target).position().left + $(target).width(),
-      by: $(target).position().top + $(target).height(),
-    };
-    // console.error(target, dimensions)
-    return dimensions;
-  };
-
-  collisionCheck = () => {
-    const player = this.getDimensions('.player');
-    this.gameDefaultValues.obstacleIds.forEach((obstacleId) => {
-      const obstacle = this.getDimensions(obstacleId);
-      if (player.lx < obstacle.rx && player.rx > obstacle.lx && player.ty < obstacle.by && player.by > obstacle.ty) {
-        this.gameOver();
-      }
-    });
-  }
+  // PLAYER MOVEMENT
 
   updatePlayerPos = () => {
     let { playerPos } = this.gameDefaultValues;
-    if (this.gameDefaultValues.moveStateRight) {
+    const { moveStateLeft, moveStateRight, gameScreenWidth } = this.gameDefaultValues;
+
+    if (moveStateRight && playerPos < gameScreenWidth - 19) {
       playerPos += 5;
       this.gameDefaultValues.playerPos = playerPos;
     }
-    if (this.gameDefaultValues.moveStateLeft) {
+    if (moveStateLeft && playerPos > 0) {
       playerPos -= 5;
       this.gameDefaultValues.playerPos = playerPos;
     }
+
     this.collisionCheck();
     $('.player').css('left', `${playerPos}px`);
   };
@@ -70,24 +124,7 @@ class BlockMatrix extends React.Component {
     }
   }
 
-  generateObstacles = (width) => {
-    const obstacles = [];
-    const obstacleIds = [];
-    const amountObstacles = this.gameDefaultValues.gameScreenWidth / width;
-
-    for (let i = 0; i < amountObstacles; i += 1) {
-      const obstacleId = `obstacle${i}`;
-      const obstacleCSS = {
-        left: `${parseFloat(width * i).toFixed(2)}px`,
-        width,
-      };
-      obstacles.push(<div id={obstacleId} className="obstacle bg-info position-absolute" style={obstacleCSS}></div>);
-      obstacleIds.push(`#${obstacleId}`);
-    }
-
-    this.gameDefaultValues.obstacleIds = obstacleIds;
-    this.setState({ obstacles });
-  }
+  // OBSTACLE GENERATION
 
   randomObstacle = () => {
     const randomNum = Math.floor(Math.random() * this.gameDefaultValues.obstacleIds.length);
@@ -95,10 +132,9 @@ class BlockMatrix extends React.Component {
     return obstacle;
   }
 
-  dropObject = (obstacle) => {
+  dropObstacle = (obstacle) => {
     const obstaclePos = parseInt($(obstacle).css('top'), 10);
     const border = parseInt($('.border').css('top'), 10) + 16;
-    console.error(obstaclePos, border);
     if (obstaclePos === -16 || obstaclePos >= border) {
       for (let i = 0; i <= border; i += 1) {
         setTimeout(() => {
@@ -110,35 +146,51 @@ class BlockMatrix extends React.Component {
 
   launchObstacles = () => {
     const obstacle = this.randomObstacle();
-    this.dropObject(obstacle);
+    this.dropObstacle(obstacle);
   };
 
-  componentDidMount() {
-    this.gameDefaultValues = {
-      gameScreenWidth: 0,
-      playerPos: 0,
-      moveStateLeft: false,
-      moveStateRight: false,
-      obstacleIds: [],
-      score: 0,
+  // COLLISION DETECTION
+
+  getDimensions = (target) => {
+    const dimensions = {
+      lx: $(target).position().left,
+      ty: $(target).position().top,
+      rx: $(target).position().left + $(target).width(),
+      by: $(target).position().top + $(target).height(),
     };
+    return dimensions;
+  };
 
-    this.getDefaultValues();
-    this.generateObstacles(64);
+  collisionCheck = () => {
+    const player = this.getDimensions('.player');
+    this.gameDefaultValues.obstacleIds.forEach((obstacleId) => {
+      const obstacle = this.getDimensions(obstacleId);
+      if (player.lx < obstacle.rx && player.rx > obstacle.lx && player.ty < obstacle.by && player.by > obstacle.ty) {
+        this.gameOver();
+      }
+    });
+  }
 
-    $('body').on('keydown', this.movePlayer);
-    $('body').on('keyup', this.stopPlayer);
+  // SCORING SYSTEM
 
-    this.movePlayerInterval = setInterval(this.updatePlayerPos, 10);
-    this.setObstaclesInterval = setInterval(this.launchObstacles, 100);
-    this.setScoreInterval = setInterval(() => { this.gameDefaultValues.score += 1; });
+  updateScore = () => {
+    this.gameDefaultValues.score += 1;
+    $('.score').text(this.gameDefaultValues.score);
+  }
+
+  saveScore = () => {
+    $('.save-score').off('click', this.saveScore);
+    $('.retry').off('click', this.launchGame);
+    const { score } = this.gameDefaultValues;
+    console.error(score);
+  }
+
+  componentDidMount() {
+    this.launchGame();
   }
 
   componentWillUnmount() {
-    clearInterval(this.movePlayerInterval);
-    clearInterval(this.setObstaclesInterval);
-    $('body').off('keydown', this.movePlayer);
-    $('body').off('keyup', this.stopPlayer);
+    this.gameOver();
   }
 
   render() {
@@ -149,7 +201,8 @@ class BlockMatrix extends React.Component {
           {this.state.obstacles}
 
           <div className="player bg-white position-absolute"></div>
-          <div className="p-3 text-white">Score: <span className="score">0</span></div>
+          <div className="p-3 text-white position-absolute">Score: <span className="score">0</span></div>
+          <div className="h-100 d-flex justify-content-center align-items-center"><div className="announcer display-1 text-white">3</div></div>
         </div>
       </div>
     );
