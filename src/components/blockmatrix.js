@@ -77,11 +77,10 @@ class BlockMatrix extends React.Component {
 
     for (let i = 0; i < amountObstacles; i += 1) {
       const obstacleId = `obstacle${i}`;
-      obstacles.push(
-        <div key={obstacleId} className="h-16 w-100 position-relative">
-          <div id={obstacleId} className="obstacle w-100 bg-info position-absolute"></div>
-        </div>,
-      );
+      const obstacleCSS = {
+        left: amountObstacles * i
+      };
+      obstacles.push(<div id={obstacleId} className="obstacle w-100 bg-info position-absolute"></div>);
       obstacleIds.push(`#${obstacleId}`);
     }
 
@@ -143,10 +142,7 @@ class BlockMatrix extends React.Component {
       <div className="BlockMatrix p-5 vh-100">
         <div className="game-screen h-100 bg-dark position-relative overflow-hidden">
           <div className="border obstacle bg-info position-absolute"></div>
-
-          <div className="obstacles-container w-100 d-flex position-absolute">
-            {this.state.obstacles}
-          </div>
+          {this.state.obstacles}
 
           <div className="player bg-white position-absolute"></div>
         </div>
