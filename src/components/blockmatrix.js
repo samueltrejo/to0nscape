@@ -79,7 +79,7 @@ class BlockMatrix extends React.Component {
         left: `${parseFloat(width * i).toFixed(2)}px`,
         width,
       };
-      obstacles.push(<div id={obstacleId} className="obstacle bg-info position-absolute" style={obstacleCSS}></div>);
+      obstacles.push(<div key={obstacleId} id={obstacleId} className="obstacle bg-info position-absolute" style={obstacleCSS}></div>);
       obstacleIds.push(`#${obstacleId}`);
     }
 
@@ -91,14 +91,17 @@ class BlockMatrix extends React.Component {
 
   updatePlayerPos = () => {
     let { playerPos } = this.gameDefaultValues;
-    if (this.gameDefaultValues.moveStateRight) {
+    const { moveStateLeft, moveStateRight, gameScreenWidth } = this.gameDefaultValues;
+
+    if (moveStateRight && playerPos < gameScreenWidth - 19) {
       playerPos += 5;
       this.gameDefaultValues.playerPos = playerPos;
     }
-    if (this.gameDefaultValues.moveStateLeft) {
+    if (moveStateLeft && playerPos > 0) {
       playerPos -= 5;
       this.gameDefaultValues.playerPos = playerPos;
     }
+
     this.collisionCheck();
     $('.player').css('left', `${playerPos}px`);
   };
