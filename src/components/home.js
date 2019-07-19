@@ -6,10 +6,10 @@ import Footer from './footer';
 
 class Home extends React.Component {
   render() {
-    const { authed } = this.props;
+    const { authed, profile } = this.props;
     return (
       <div>
-        <HomeNavbar authed={authed} />
+        <HomeNavbar authed={authed} profile={profile} />
         <HomeGames />
         <Footer />
       </div>

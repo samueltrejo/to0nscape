@@ -6,6 +6,10 @@ import 'firebase/auth';
 import $ from 'jquery';
 
 class HomeNavbar extends React.Component {
+  state = {
+    profile: [],
+  }
+
   componentDidMount() {
     $('.carousel').carousel({
       interval: 5000,
@@ -24,7 +28,9 @@ class HomeNavbar extends React.Component {
   }
 
   render() {
-    const { authed } = this.props;
+    // const { profile } = this.state;
+    const { authed, profile } = this.props;
+    const profileLink = profile ? (<Link to={`/profile/${profile.username}`} className="nav-item nav-link">Profile</Link>) : (<Link to="/new-profile" className="nav-item nav-link">Profile</Link>);
 
     return (
       <div>
@@ -82,7 +88,7 @@ class HomeNavbar extends React.Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                {authed ? (<Link to="/profile" className="nav-item nav-link">Profile</Link>) : ('')}
+                {authed ? (profileLink) : ('')}
                 {authed ? (<Link to="/leaderboards" className="nav-item nav-link">Leaderboards</Link>) : ('')}
                 {authed ? (<span className="nav-item nav-link" onClick={this.logout}>Logout</span>) : ('')}
                 {!authed ? (<span className="nav-item nav-link" onClick={this.login}>Sign In</span>) : ('')}

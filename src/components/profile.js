@@ -19,7 +19,9 @@ class Profile extends React.Component {
   getMyProfile = () => {
     const { uid } = firebase.auth().currentUser;
     profileData.getMyProfile(uid)
-      .then(profile => this.setState({ profile }))
+      .then((profile) => {
+        profile.length ? (this.props.history.push(`/profile/${profile.username}`)) : (this.props.history.push('/new-profile'));
+      })
       .catch(error => console.error(error));
   }
 
@@ -28,11 +30,11 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { profile } = this.state;
+    // const { profile } = this.state;
     return (
       <div>
-        {profile.length ? ('') : (<NewProfile getMyProfile={this.getMyProfile} redirectToHome={this.redirectToHome} />)}
-        {profile.length ? (<MyProfile getMyProfile={this.getMyProfile} profile={profile[0]} />) : ('')}
+        {/* {profile.length ? ('') : (<NewProfile getMyProfile={this.getMyProfile} redirectToHome={this.redirectToHome} />)} */}
+        {/* {profile.length ? (<MyProfile getMyProfile={this.getMyProfile} profile={profile[0]} />) : ('')} */}
       </div>
     );
   }
