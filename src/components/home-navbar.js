@@ -6,10 +6,6 @@ import 'firebase/auth';
 import $ from 'jquery';
 
 class HomeNavbar extends React.Component {
-  state = {
-    profile: [],
-  }
-
   componentDidMount() {
     $('.carousel').carousel({
       interval: 5000,
@@ -28,15 +24,15 @@ class HomeNavbar extends React.Component {
   }
 
   render() {
-    // const { profile } = this.state;
     const { authed, profile } = this.props;
-    const profileLink = profile ? (<Link to={`/profile/${profile.username}`} className="nav-item nav-link">Profile</Link>) : (<Link to="/new-profile" className="nav-item nav-link">Profile</Link>);
+    const profileLink = profile.length ? (<Link to={`/profile/${profile[0].username}`} className="nav-item nav-link">Profile</Link>)
+      : (<Link to="/new-profile" className="nav-item nav-link">Profile</Link>);
 
     return (
       <div>
         <div className="navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column p-0">
 
-          <div className="container">
+          <div className="container mx-0">
             <div className="bd-example">
               <div id="carouselExampleCaptions" className="carousel slide" data-ride="carousel">
                 <ol className="carousel-indicators">
@@ -81,7 +77,7 @@ class HomeNavbar extends React.Component {
 
           <div className="backdrop position-absolute"></div>
 
-          <div className="HomeNavbar container position-absolute p-5">
+          <div className="HomeNavbar container position-absolute">
             <Link to="/home" className="navbar-brand">To0nscape</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>

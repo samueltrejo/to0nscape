@@ -4,8 +4,8 @@ import 'firebase/auth';
 
 import profileData from '../helpers/data/profile-data';
 
-import NewProfile from './new-profile';
-import MyProfile from './my-profile';
+// import NewProfile from './new-profile';
+// import MyProfile from './my-profile';
 
 class Profile extends React.Component {
   state = {

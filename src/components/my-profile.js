@@ -1,4 +1,6 @@
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 import Navbar from './navbar';
 
@@ -7,7 +9,20 @@ import profileData from '../helpers/data/profile-data';
 class MyProfile extends React.Component {
   state = {
     edit: false,
-    profile: this.props.profile,
+    profile: {},
+  }
+
+  getMyProfile = () => {
+    if (this.props.authed) {
+      const { uid } = firebase.auth().currentUser;
+      profileData.getMyProfile(uid)
+        .then(profile => this.setState({ profile: profile[0] }))
+        .catch(error => console.error(error));
+    }
+  }
+
+  componentDidMount() {
+    this.getMyProfile();
   }
 
   deleteProfile = () => {
