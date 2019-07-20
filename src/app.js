@@ -11,7 +11,6 @@ import 'firebase/auth';
 import initFirebase from './helpers/firebase-init';
 
 import Home from './components/home';
-// import Profile from './components/profile';
 import NewProfile from './components/new-profile';
 import MyProfile from './components/my-profile';
 import BlockMatrixStartscreen from './components/blockmatrix-startscreen';
@@ -69,7 +68,6 @@ class App extends React.Component {
               <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} />
               <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} />
               <PrivateRoute path="/profile/:username" component={MyProfile} authed={authed} />
-              {/* <PrivateRoute path="/profile" component={Profile} authed={authed} /> */}
               <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} />
               <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} />
 

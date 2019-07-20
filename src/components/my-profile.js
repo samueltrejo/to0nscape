@@ -16,7 +16,7 @@ class MyProfile extends React.Component {
     if (this.props.authed) {
       const { uid } = firebase.auth().currentUser;
       profileData.getMyProfile(uid)
-        .then(profile => this.setState({ profile: profile[0] }))
+        .then(profile => this.setState({ profile }))
         .catch(error => console.error(error));
     }
   }
@@ -26,8 +26,8 @@ class MyProfile extends React.Component {
   }
 
   deleteProfile = () => {
-    profileData.deleteProfile(this.props.profile.id)
-      .then(() => this.props.getMyProfile())
+    profileData.deleteProfile(this.state.profile.id)
+      .then(() => this.props.history.push('/home'))
       .catch(error => console.error(error));
   }
 
@@ -38,7 +38,7 @@ class MyProfile extends React.Component {
     delete profileCopy.id;
     profileData.updateProfile(profileId, profileCopy)
       .then(() => {
-        this.props.getMyProfile();
+        this.getMyProfile();
         this.cancelEditState();
       })
       .catch(error => console.error(error));
@@ -68,7 +68,7 @@ class MyProfile extends React.Component {
     const { profile, edit } = this.state;
     return (
       <div>
-        <Navbar />
+        <Navbar authed={this.props.authed} carousel={false} profile={profile} />
         <div className="hero-image overflow-hidden position-relative">
           <img src="https://i.imgur.com/6QPY9Cz.jpg" className="img-fluid" alt="..." />
             {edit ? (

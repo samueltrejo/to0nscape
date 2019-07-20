@@ -4,13 +4,13 @@ import 'firebase/auth';
 
 import profileData from '../helpers/data/profile-data';
 
-import HomeNavbar from './home-navbar';
+import Navbar from './navbar';
 import HomeGames from './home-games';
 import Footer from './footer';
 
 class Home extends React.Component {
   state = {
-    profile: [],
+    profile: {},
   }
 
   getMyProfile = () => {
@@ -31,7 +31,7 @@ class Home extends React.Component {
     const { authed } = this.props;
     return (
       <div>
-        <HomeNavbar authed={authed} profile={profile} />
+        <Navbar authed={authed} profile={profile} carousel={true} />
         <HomeGames />
         <Footer />
       </div>
