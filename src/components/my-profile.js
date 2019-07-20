@@ -1,4 +1,6 @@
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 import Navbar from './navbar';
 
@@ -7,12 +9,25 @@ import profileData from '../helpers/data/profile-data';
 class MyProfile extends React.Component {
   state = {
     edit: false,
-    profile: this.props.profile,
+    profile: {},
+  }
+
+  getMyProfile = () => {
+    if (this.props.authed) {
+      const { uid } = firebase.auth().currentUser;
+      profileData.getMyProfile(uid)
+        .then(profile => this.setState({ profile }))
+        .catch(error => console.error(error));
+    }
+  }
+
+  componentDidMount() {
+    this.getMyProfile();
   }
 
   deleteProfile = () => {
-    profileData.deleteProfile(this.props.profile.id)
-      .then(() => this.props.getMyProfile())
+    profileData.deleteProfile(this.state.profile.id)
+      .then(() => this.props.history.push('/home'))
       .catch(error => console.error(error));
   }
 
@@ -23,7 +38,7 @@ class MyProfile extends React.Component {
     delete profileCopy.id;
     profileData.updateProfile(profileId, profileCopy)
       .then(() => {
-        this.props.getMyProfile();
+        this.getMyProfile();
         this.cancelEditState();
       })
       .catch(error => console.error(error));
@@ -53,7 +68,7 @@ class MyProfile extends React.Component {
     const { profile, edit } = this.state;
     return (
       <div>
-        <Navbar />
+        <Navbar authed={this.props.authed} carousel={false} profile={profile} />
         <div className="hero-image overflow-hidden position-relative">
           <img src="https://i.imgur.com/6QPY9Cz.jpg" className="img-fluid" alt="..." />
             {edit ? (

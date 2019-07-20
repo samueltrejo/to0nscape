@@ -1,5 +1,10 @@
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import $ from 'jquery';
+
+import profileData from '../helpers/data/profile-data';
+import scoresData from '../helpers/data/scores-data';
 
 class BlockMatrix extends React.Component {
   state = {
@@ -53,7 +58,7 @@ class BlockMatrix extends React.Component {
   }
 
   endGameScreen = () => {
-    const endGameInfo = '<div>You Lose!</div><div class="d-flex"><button class="save-score btn btn-outline-light ml-auto mr-3">Save Your Score</button><button class="retry btn btn-outline-light">Try Again</button></div>';
+    const endGameInfo = '<div>You Lose!</div><div class="d-flex"><button class="save-score btn btn-outline-light ml-auto mr-3">Save and View Score</button><button class="retry btn btn-outline-light">Try Again</button></div>';
     $('.announcer').html(endGameInfo);
     $('.save-score').off('click', this.saveScore);
     $('.retry').off('click', this.launchGame);
@@ -181,8 +186,17 @@ class BlockMatrix extends React.Component {
   saveScore = () => {
     $('.save-score').off('click', this.saveScore);
     $('.retry').off('click', this.launchGame);
-    const { score } = this.gameDefaultValues;
-    console.error(score);
+    profileData.getMyProfile(firebase.auth().currentUser.uid)
+      .then((profile) => {
+        const score = {
+          score: this.gameDefaultValues.score,
+          game: 'Block Matrix',
+          username: profile.username,
+        };
+        scoresData.postScore(score)
+          .then(() => this.props.history.push('/leaderboards'));
+      })
+      .catch(error => console.error(error));
   }
 
   componentDidMount() {

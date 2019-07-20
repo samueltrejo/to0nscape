@@ -21,7 +21,7 @@ class NewProfile extends React.Component {
     const profile = { ...this.state.newProfile };
     profile.uid = firebase.auth().currentUser.uid;
     profileData.createProfile(profile)
-      .then(() => this.props.getMyProfile())
+      .then(() => this.props.history.push(`/profile/${profile.username}`))
       .catch(error => console.error(error));
   }
 
