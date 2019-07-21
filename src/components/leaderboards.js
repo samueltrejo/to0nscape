@@ -61,12 +61,12 @@ class Leaderboards extends React.Component {
       scores,
     } = this.state;
     const writeScoreCategories = scoreCategories.map(category => (
-      <span class="dropdown-item" onClick={this.setScoreCategory}>{category}</span>
+      <span key={category} className="dropdown-item" onClick={this.setScoreCategory}>{category}</span>
     ));
     const writeScores = scores.map((score) => {
       let scoreElement = '';
       if (score.game.includes(scoreCategory)) {
-        scoreElement = <li class="list-group-item">{score.username}, {score.score}</li>;
+        scoreElement = <li key={score.id} className="list-group-item">{score.username}, {score.score}</li>;
       }
       return scoreElement;
     });
@@ -76,21 +76,21 @@ class Leaderboards extends React.Component {
         <h3>Leaderboards</h3>
 
         <div className="container mt-5">
-          <div class="card">
-            <div class="card-body">
-              <div class="dropdown">
-            <h5 class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="border-bottom border-dark">{scoreCategory}</span>
+          <div className="card">
+            <div className="card-body">
+              <div className="dropdown">
+            <h5 className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span className="border-bottom border-dark">{scoreCategory}</span>
             </h5>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
               {writeScoreCategories}
             </div>
           </div>
             </div>
-            <ul class="list-group list-group-flush">
+            <ul className="list-group list-group-flush">
               {writeScores}
             </ul>
-            <div class="card-body"></div>
+            <div className="card-body"></div>
           </div>
         </div>
       </div>

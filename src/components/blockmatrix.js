@@ -66,10 +66,15 @@ class BlockMatrix extends React.Component {
   }
 
   endGameScreen = () => {
-    const endGameInfo = '<div>You Lose!</div><div class="d-flex"><button class="save-score btn btn-outline-light ml-auto mr-3">Save and View Score</button><button class="retry btn btn-outline-light">Try Again</button></div>';
+    let endGameInfo = '<div>You Lose!</div><div class="d-flex">';
+    endGameInfo += '<button class="to-start btn btn-outline-light ml-auto mr-3">Back</button>';
+    endGameInfo += '<button class="save-score btn btn-outline-light mr-3">Save and View Score</button>';
+    endGameInfo += '<button class="retry btn btn-outline-light">Try Again</button></div>';
     $('.announcer').html(endGameInfo);
+    $('.to-start').off('click', this.toStart);
     $('.save-score').off('click', this.saveScore);
     $('.retry').off('click', this.launchGame);
+    $('.to-start').on('click', this.toStart);
     $('.save-score').on('click', this.saveScore);
     $('.retry').on('click', this.launchGame);
   }
@@ -97,6 +102,10 @@ class BlockMatrix extends React.Component {
     console.error('os', os, 'ps', ps, 'sw', this.gameDefaultValues.gameScreenWidth);
     this.gameDefaultValues.obstacleDropSpeed = os;
     this.gameDefaultValues.playerMovementSpeed = ps;
+  }
+
+  toStart = () => {
+    this.props.history.push('/blockmatrix-startscreen');
   }
 
   // PLAYER MOVEMENT
@@ -172,6 +181,11 @@ class BlockMatrix extends React.Component {
         setTimeout(() => {
           $(obstacle).css('top', `${i}px`);
         }, this.gameDefaultValues.obstacleDropSpeed * i);
+        if (i >= border) {
+          setTimeout(() => {
+            $(obstacle).css('top', '-16px');
+          }, this.gameDefaultValues.obstacleDropSpeed * i);
+        }
       }
     }
   }
