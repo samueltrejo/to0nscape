@@ -60,11 +60,6 @@ class BlockMatrixStartscreen extends React.Component {
     lobbiesData.getLobby(this.state.lobbyInputValue)
       .then((lobby) => {
         if (lobby.lobbyCode) {
-          if (lobby.user1 === '') {
-            console.error('i am user1');
-          } else {
-            console.error('i am user2');
-          }
           this.props.history.push(`/blockmatrix/${lobby.lobbyCode}`);
         }
       })

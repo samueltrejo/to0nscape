@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 import $ from 'jquery';
 
 import profileData from '../helpers/data/profile-data';
@@ -15,16 +16,19 @@ class BlockMatrixMultiplayer extends React.Component {
 
   // GAME PREPARATION
 
-  getLobby = () => {
-    lobbiesData.getLobby(this.props.match.params.lobby)
-      .then((lobby) => {
-        this.setState({ lobby: lobby.data });
-      })
-      .catch(error => console.error(error));
+  getLobby = (data) => {
+    const lobby = data.val();
+    this.setState({ lobby });
   }
 
-  multiplayerLobbyQueue = () => {
-    
+  catchError = (error) => {
+    console.error(error);
+  };
+
+  initLobby = () => {
+    lobbiesData.getLobby(this.props.match.params.lobby)
+      .then(lobby => firebase.database().ref(`lobbies/${lobby.id}`).on('value', this.getLobby, this.catchError))
+      .catch(error => console.error(error));
   }
 
   startGame = () => {
@@ -39,6 +43,7 @@ class BlockMatrixMultiplayer extends React.Component {
       playerMovementSpeed: 1,
       movePlayerIntervalSpeed: 10,
       launchObstaclesIntervalSpeed: 100,
+      lobbyValues: {},
     };
 
     this.getDefaultValues();
@@ -80,10 +85,10 @@ class BlockMatrixMultiplayer extends React.Component {
   }
 
   endGameScreen = () => {
-    let endGameInfo = '<div>You Lose!</div><div class="d-flex">';
-    endGameInfo += '<button class="to-start btn btn-outline-light ml-auto mr-3">Back</button>';
-    endGameInfo += '<button class="save-score btn btn-outline-light mr-3">Save and View Score</button>';
-    endGameInfo += '<button class="retry btn btn-outline-light">Try Again</button></div>';
+    let endGameInfo = '<div>You Lose!</div><div className="d-flex">';
+    endGameInfo += '<button className="to-start btn btn-outline-light ml-auto mr-3">Back</button>';
+    endGameInfo += '<button className="save-score btn btn-outline-light mr-3">Save and View Score</button>';
+    endGameInfo += '<button className="retry btn btn-outline-light">Try Again</button></div>';
     $('.announcer').html(endGameInfo);
     $('.to-start').off('click', this.toStart);
     $('.save-score').off('click', this.saveScore);
@@ -262,7 +267,7 @@ class BlockMatrixMultiplayer extends React.Component {
 
   componentDidMount() {
     // this.launchGame();
-    this.getLobby();
+    this.initLobby();
   }
 
   componentWillUnmount() {
@@ -278,10 +283,33 @@ class BlockMatrixMultiplayer extends React.Component {
 
           <div className="player bg-white position-absolute"></div>
           <div className="p-3 text-white position-absolute">Score: <span className="score">0</span></div>
-          <div className="h-100 d-flex justify-content-center align-items-center"><div className="announcer display-1 text-white"></div></div>
+          {/* <div className="h-100 d-flex justify-content-center align-items-center"><div className="announcer display-1 text-white"></div></div> */}
           <div className="h-100 d-flex justify-content-center align-items-center">
-            <div className="lobby-queue display-1 text-white">
-
+            <div className="lobby-queue text-white">
+            <div className="display-4">Block Matrix Lobby</div>
+              <table className="table table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Ready</th>
+                    <th scope="col">Players</th>
+                    <th scope="col">Lobby</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><i className="fas fa-check"></i></th>
+                    <td>To0ns</td>
+                    <td>yd6St</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <div className="spinner-border text-light" role="status"><span className="sr-only">Loading...</span></div>
+                    </th>
+                    <td>Waiting for player...</td>
+                    <td>yd6St</td>
+                  </tr>
+                  </tbody>
+              </table>
             </div>
           </div>
         </div>
