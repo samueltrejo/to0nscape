@@ -39,9 +39,11 @@ class BlockMatrixMultiplayer extends React.Component {
     const { lobby } = this.state;
     if (lobby.player1Ready) {
       lobby.player1Ready = false;
+      delete lobby.id;
       lobbiesData.updateLobby(lobby, lobby.id);
     } else {
       lobby.player1Ready = true;
+      delete lobby.id;
       lobbiesData.updateLobby(lobby, lobby.id);
     }
   }
@@ -66,13 +68,17 @@ class BlockMatrixMultiplayer extends React.Component {
 
         lobbiesData.getLobby(this.props.match.params.lobby)
           .then((lobby) => {
+            const lobbyCopy = lobby;
             if (lobby.player1 === profile.username) {
               this.setState({ player: 'player1' });
             } else if (lobby.player2 === '') {
+              lobbyCopy.player2 = profile.username;
               this.setState({ player: 'player2' });
             }
-
             firebase.database().ref(`lobbies/${lobby.id}`).on('value', this.getLobby, this.catchError);
+            const lobbyId = lobby.id;
+            delete lobbyCopy.id;
+            lobbiesData.updateLobby(lobbyCopy, lobbyId);
           });
       })
       .catch(error => console.error(error));
@@ -353,7 +359,7 @@ class BlockMatrixMultiplayer extends React.Component {
                     <th scope="row">
                       {lobby.player2 === '' ? (<div className="spinner-border text-light" role="status"><span className="sr-only">Loading...</span></div>) : ('')}
                       {lobby.player2 !== '' && lobby.player2Ready === false ? (<i className="fas fa-times hover-pointer" onClick={this.changePlayer2Status}></i>) : ('')}
-                      {lobby.player2 !== '' && lobby.player2Ready === false ? (<i className="fas fa-check hover-pointer" onClick={this.changePlayer2Status}></i>) : ('')}
+                      {lobby.player2 !== '' && lobby.player2Ready === true ? (<i className="fas fa-check hover-pointer" onClick={this.changePlayer2Status}></i>) : ('')}
                     </th>
                     <td>{lobby.player2 === '' ? ('Waiting for player...') : (lobby.player2)}</td>
                     <td>{lobby.lobbyCode}</td>
