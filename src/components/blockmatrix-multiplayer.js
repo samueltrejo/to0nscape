@@ -11,13 +11,46 @@ import lobbiesData from '../helpers/data/lobbies-data';
 class BlockMatrixMultiplayer extends React.Component {
   state = {
     obstacles: [],
-    lobby: {},
+    lobby: {
+      player1: '',
+      player1Ready: false,
+      player2: '',
+      player2Ready: false,
+      lobbyCode: '',
+    },
+    player: '',
+    profile: {},
+  }
+
+  // MULTIPLAYER
+
+  changePlayer1Status = () => {
+    const { lobby } = this.state;
+    if (lobby.player1Ready) {
+      lobby.player1Ready = false;
+      lobbiesData.updateLobby(lobby, lobby.id);
+    } else {
+      lobby.player1Ready = true;
+      lobbiesData.updateLobby(lobby, lobby.id);
+    }
+  }
+
+  changePlayer2Status = () => {
+    const { lobby } = this.state;
+    if (lobby.player1Ready) {
+      lobby.player1Ready = false;
+      lobbiesData.updateLobby(lobby, lobby.id);
+    } else {
+      lobby.player1Ready = true;
+      lobbiesData.updateLobby(lobby, lobby.id);
+    }
   }
 
   // GAME PREPARATION
 
   getLobby = (data) => {
     const lobby = data.val();
+    lobby.id = data.key;
     this.setState({ lobby });
   }
 
@@ -26,8 +59,22 @@ class BlockMatrixMultiplayer extends React.Component {
   };
 
   initLobby = () => {
-    lobbiesData.getLobby(this.props.match.params.lobby)
-      .then(lobby => firebase.database().ref(`lobbies/${lobby.id}`).on('value', this.getLobby, this.catchError))
+    const { uid } = firebase.auth().currentUser;
+    profileData.getMyProfile(uid)
+      .then((profile) => {
+        this.setState({ profile });
+
+        lobbiesData.getLobby(this.props.match.params.lobby)
+          .then((lobby) => {
+            if (lobby.player1 === profile.username) {
+              this.setState({ player: 'player1' });
+            } else if (lobby.player2 === '') {
+              this.setState({ player: 'player2' });
+            }
+
+            firebase.database().ref(`lobbies/${lobby.id}`).on('value', this.getLobby, this.catchError);
+          });
+      })
       .catch(error => console.error(error));
   }
 
@@ -275,6 +322,7 @@ class BlockMatrixMultiplayer extends React.Component {
   }
 
   render() {
+    const { lobby } = this.state;
     return (
       <div className="BlockMatrix p-5 vh-100">
         <div className="game-screen h-100 bg-dark position-relative overflow-hidden">
@@ -297,16 +345,18 @@ class BlockMatrixMultiplayer extends React.Component {
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row"><i className="fas fa-check"></i></th>
-                    <td>To0ns</td>
-                    <td>yd6St</td>
+                    <th scope="row">{lobby.player1Ready ? (<i className="fas fa-check hover-pointer" onClick={this.changePlayer1Status}></i>) : (<i className="fas fa-times hover-pointer" onClick={this.changePlayer1Status}></i>)}</th>
+                    <td>{lobby.player1}</td>
+                    <td>{lobby.lobbyCode}</td>
                   </tr>
                   <tr>
                     <th scope="row">
-                      <div className="spinner-border text-light" role="status"><span className="sr-only">Loading...</span></div>
+                      {lobby.player2 === '' ? (<div className="spinner-border text-light" role="status"><span className="sr-only">Loading...</span></div>) : ('')}
+                      {lobby.player2 !== '' && lobby.player2Ready === false ? (<i className="fas fa-times hover-pointer" onClick={this.changePlayer2Status}></i>) : ('')}
+                      {lobby.player2 !== '' && lobby.player2Ready === false ? (<i className="fas fa-check hover-pointer" onClick={this.changePlayer2Status}></i>) : ('')}
                     </th>
-                    <td>Waiting for player...</td>
-                    <td>yd6St</td>
+                    <td>{lobby.player2 === '' ? ('Waiting for player...') : (lobby.player2)}</td>
+                    <td>{lobby.lobbyCode}</td>
                   </tr>
                   </tbody>
               </table>

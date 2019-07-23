@@ -37,8 +37,10 @@ const getLobby = lobbyCode => new Promise((resolve, reject) => {
 
 const createLobby = lobby => axios.post(`${databaseUrl}/lobbies.json`, lobby);
 
+const updateLobby = (lobby, lobbyId) => axios.put(`${databaseUrl}/lobbies/${lobbyId}.json`, lobby);
+
 // const updateProfile = (profileId, profile) => axios.put(`${databaseUrl}/profiles/${profileId}.json`, profile);
 
 // const deleteProfile = profileId => axios.delete(`${databaseUrl}/profiles/${profileId}.json`);
 
-export default { getLobby, createLobby };
+export default { getLobby, createLobby, updateLobby };
