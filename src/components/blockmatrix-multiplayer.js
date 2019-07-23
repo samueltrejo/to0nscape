@@ -25,26 +25,30 @@ class BlockMatrixMultiplayer extends React.Component {
   // MULTIPLAYER
 
   changePlayer1Status = () => {
-    const { lobby } = this.state;
-    if (lobby.player1Ready) {
-      lobby.player1Ready = false;
-      lobbiesData.updateLobby(lobby, lobby.id);
-    } else {
-      lobby.player1Ready = true;
-      lobbiesData.updateLobby(lobby, lobby.id);
+    const { lobby, player } = this.state;
+    if (player === 'player1' && lobby.id !== undefined) {
+      const lobbyId = lobby.id;
+      if (lobby.player1Ready) {
+        lobby.player1Ready = false;
+      } else {
+        lobby.player1Ready = true;
+      }
+      delete lobby.id;
+      lobbiesData.updateLobby(lobby, lobbyId);
     }
   }
 
   changePlayer2Status = () => {
-    const { lobby } = this.state;
-    if (lobby.player1Ready) {
-      lobby.player1Ready = false;
+    const { lobby, player } = this.state;
+    if (player === 'player2' && lobby.id !== undefined) {
+      const lobbyId = lobby.id;
+      if (lobby.player2Ready) {
+        lobby.player2Ready = false;
+      } else {
+        lobby.player2Ready = true;
+      }
       delete lobby.id;
-      lobbiesData.updateLobby(lobby, lobby.id);
-    } else {
-      lobby.player1Ready = true;
-      delete lobby.id;
-      lobbiesData.updateLobby(lobby, lobby.id);
+      lobbiesData.updateLobby(lobby, lobbyId);
     }
   }
 
