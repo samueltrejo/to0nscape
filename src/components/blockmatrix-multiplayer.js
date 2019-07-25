@@ -25,8 +25,9 @@ class BlockMatrixMultiplayer extends React.Component {
   // MULTIPLAYER LOBBY
 
   changePlayer1Status = () => {
+    console.error('test');
     const { lobby, player } = this.state;
-    if (player === 'player1' && lobby.id !== undefined) {
+    if (player === 'player1' && this.lobbyId !== undefined) {
       if (lobby.player1Ready) {
         lobby.player1Ready = false;
       } else {
@@ -38,7 +39,7 @@ class BlockMatrixMultiplayer extends React.Component {
 
   changePlayer2Status = () => {
     const { lobby, player } = this.state;
-    if (player === 'player2' && lobby.id !== undefined) {
+    if (player === 'player2' && this.lobbyId !== undefined) {
       if (lobby.player2Ready) {
         lobby.player2Ready = false;
       } else {
@@ -144,6 +145,12 @@ class BlockMatrixMultiplayer extends React.Component {
   // PLAYER MOVEMENT
 
   updatePlayer = (data) => {
+    if (this.state.player === 'player1') {
+      this.lobby.player2Pos = data.val().player2Pos;
+    }
+    if (this.state.player === 'player2') {
+      this.lobby.player1Pos = data.val().player1Pos;
+    }
     $('.player1').css('left', `${data.val().player1Pos}px`);
     $('.player2').css('left', `${data.val().player2Pos}px`);
   }
