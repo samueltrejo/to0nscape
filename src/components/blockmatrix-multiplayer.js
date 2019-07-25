@@ -27,43 +27,37 @@ class BlockMatrixMultiplayer extends React.Component {
   changePlayer1Status = () => {
     const { lobby, player } = this.state;
     if (player === 'player1' && lobby.id !== undefined) {
-      const lobbyId = lobby.id;
       if (lobby.player1Ready) {
         lobby.player1Ready = false;
       } else {
         lobby.player1Ready = true;
       }
-      delete lobby.id;
-      lobbiesData.updateLobby(lobby, lobbyId);
+      lobbiesData.updateLobby(lobby, this.lobbyId);
     }
   }
 
   changePlayer2Status = () => {
     const { lobby, player } = this.state;
     if (player === 'player2' && lobby.id !== undefined) {
-      const lobbyId = lobby.id;
       if (lobby.player2Ready) {
         lobby.player2Ready = false;
       } else {
         lobby.player2Ready = true;
       }
-      delete lobby.id;
-      lobbiesData.updateLobby(lobby, lobbyId);
+      lobbiesData.updateLobby(lobby, this.lobbyId);
     }
   }
 
   checkIfPlayersReady = () => {
     const { lobby } = this.state;
     if (lobby.player1Ready && lobby.player2Ready) {
-      firebase.database().ref(`lobbies/${lobby.id}`).off('value', this.getLobby);
-      console.error('off');
+      firebase.database().ref(`lobbies/${this.lobbyId}`).off('value', this.getLobby);
       this.launchGame();
     }
   }
 
   getLobby = (data) => {
     const lobby = data.val();
-    lobby.id = data.key;
     this.setState({ lobby });
     this.checkIfPlayersReady();
   }
@@ -88,21 +82,16 @@ class BlockMatrixMultiplayer extends React.Component {
               lobbyCopy.player2 = profile.username;
               this.setState({ player: 'player2' });
             }
-            firebase.database().ref(`lobbies/${lobby.id}`).on('value', this.getLobby, this.catchError);
-            console.error('on');
-            const lobbyId = lobby.id;
+            this.lobbyId = lobby.id;
             delete lobbyCopy.id;
-            lobbiesData.updateLobby(lobbyCopy, lobbyId);
+            firebase.database().ref(`lobbies/${this.lobbyId}`).on('value', this.getLobby, this.catchError);
+            lobbiesData.updateLobby(lobbyCopy, this.lobbyId);
           });
       })
       .catch(error => console.error(error));
   }
 
   // GAME PREPARATION
-
-  updateGameValues = () => {
-    console.error('update game values');
-  }
 
   launchGame = () => {
     $('.lobby-queue').hide();
@@ -112,19 +101,26 @@ class BlockMatrixMultiplayer extends React.Component {
     setTimeout(() => $('.announcer').html('1'), 2000);
     setTimeout(() => {
       $('.announcer').html('GO');
-      $('.lobby-container').fadeOut();
+      $('.announcer').fadeOut();
       this.startGame();
     }, 3000);
   }
 
   startGame = () => {
-    // firebase.database().ref(`lobbies/${this.state.lobby.id}`).on('value', this.updateGameValues, this.catchError);
+    this.lobby = this.state.lobby;
+    this.lobby.player1Pos = 0;
+    this.lobby.player2Pos = 0;
+    delete this.lobby.id;
+    console.error(this.state.lobby);
+
     this.gameDefaultValues = {
-      player1Pos: 0,
-      player2Pos: 0,
       gameScreenWidth: 0,
-      movePlayerIntervalSpeed: 10,
+      movePlayerIntervalSpeed: 100,
       playerMovementSpeed: 1,
+      player1Left: false,
+      player1Right: false,
+      player2Left: false,
+      player2Right: false,
     };
 
     this.getDefaultValues();
@@ -132,16 +128,100 @@ class BlockMatrixMultiplayer extends React.Component {
     $('body').on('keydown', this.movePlayer);
     $('body').on('keyup', this.stopPlayer);
 
+    firebase.database().ref(`lobbies/${this.lobbyId}`).on('value', this.updatePlayer, this.catchError);
     this.movePlayerInterval = setInterval(this.updatePlayerPos, this.gameDefaultValues.movePlayerIntervalSpeed);
   }
 
   getDefaultValues = () => {
     const gameScreenWidth = parseInt($('.game-screen').width(), 10);
-    const playerPos1 = (gameScreenWidth / 4);
-    const playerPos2 = (gameScreenWidth / 4) * 3;
+    const player1Pos = (gameScreenWidth / 4);
+    const player2Pos = (gameScreenWidth / 4) * 3;
     this.gameDefaultValues.gameScreenWidth = gameScreenWidth;
-    this.gameDefaultValues.playerPos1 = playerPos1;
-    this.gameDefaultValues.playerPos2 = playerPos2;
+    this.lobby.player1Pos = player1Pos;
+    this.lobby.player2Pos = player2Pos;
+  }
+
+  // PLAYER MOVEMENT
+
+  updatePlayer = (data) => {
+    $('.player1').css('left', `${data.val().player1Pos}px`);
+    $('.player2').css('left', `${data.val().player2Pos}px`);
+  }
+
+  updatePlayerPos = () => {
+    const { player } = this.state;
+    let { player1Pos, player2Pos } = this.lobby;
+    const {
+      player1Left,
+      player1Right,
+      player2Left,
+      player2Right,
+      gameScreenWidth,
+      playerMovementSpeed,
+    } = this.gameDefaultValues;
+
+    if (player === 'player1' && player1Left && player1Pos > 0) {
+      player1Pos -= playerMovementSpeed;
+    }
+    if (player === 'player1' && player1Right && player1Pos < gameScreenWidth - 19) {
+      player1Pos += playerMovementSpeed;
+    }
+    if (player === 'player2' && player2Left && player2Pos > 0) {
+      player2Pos -= playerMovementSpeed;
+    }
+    if (player === 'player2' && player2Right && player2Pos < gameScreenWidth - 19) {
+      player2Pos += playerMovementSpeed;
+    }
+
+    if (player === 'player1' && this.lobbyId !== undefined) {
+      this.lobby.player1Pos = player1Pos;
+      lobbiesData.updateLobbyP1(this.lobby.player1Pos, this.lobbyId);
+    }
+    if (player === 'player2' && this.lobbyId !== undefined) {
+      this.lobby.player2Pos = player2Pos;
+      lobbiesData.updateLobbyP2(this.lobby.player2Pos, this.lobbyId);
+    }
+
+    // console.error(this.lobby, this.lobbyId);
+    // this.updatePlayer(this.lobby);
+
+    // this.collisionCheck();
+    // $('.player').css('left', `${playerPos}px`);
+    // lobbiesData.updateLobby(this.lobby, this.state.lobby.id);
+  };
+
+  movePlayer = (event) => {
+    const { player } = this.state;
+    const { keyCode } = event;
+
+    if (player === 'player1' && keyCode === 37) {
+      this.gameDefaultValues.player1Left = true;
+    } else if (player === 'player1' && keyCode === 39) {
+      this.gameDefaultValues.player1Right = true;
+    }
+
+    if (player === 'player2' && keyCode === 37) {
+      this.gameDefaultValues.player2Left = true;
+    } else if (player === 'player2' && keyCode === 39) {
+      this.gameDefaultValues.player2Right = true;
+    }
+  }
+
+  stopPlayer = (event) => {
+    const { player } = this.state;
+    const { keyCode } = event;
+
+    if (player === 'player1' && keyCode === 37) {
+      this.gameDefaultValues.player1Left = false;
+    } else if (player === 'player1' && keyCode === 39) {
+      this.gameDefaultValues.player1Right = false;
+    }
+
+    if (player === 'player2' && keyCode === 37) {
+      this.gameDefaultValues.player2Left = false;
+    } else if (player === 'player2' && keyCode === 39) {
+      this.gameDefaultValues.player2Right = false;
+    }
   }
 
   componentDidMount() {

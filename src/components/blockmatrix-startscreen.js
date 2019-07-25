@@ -39,11 +39,12 @@ class BlockMatrixStartscreen extends React.Component {
 
   createLobby = () => {
     const lobby = {
-      waitingForPlayers: true,
       player1: this.state.profile.username,
       player1Ready: false,
+      player1Pos: 0,
       player2: '',
       player2Ready: false,
+      player2Pos: 0,
       lobbyCode: this.generateLobbyCode(5),
     };
 

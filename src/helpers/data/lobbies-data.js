@@ -39,8 +39,17 @@ const createLobby = lobby => axios.post(`${databaseUrl}/lobbies.json`, lobby);
 
 const updateLobby = (lobby, lobbyId) => axios.put(`${databaseUrl}/lobbies/${lobbyId}.json`, lobby);
 
+const updateLobbyP1 = (player1Pos, lobbyId) => axios.put(`${databaseUrl}/lobbies/${lobbyId}/player1Pos.json`, player1Pos);
+const updateLobbyP2 = (player2Pos, lobbyId) => axios.put(`${databaseUrl}/lobbies/${lobbyId}/player2Pos.json`, player2Pos);
+
 // const updateProfile = (profileId, profile) => axios.put(`${databaseUrl}/profiles/${profileId}.json`, profile);
 
 // const deleteProfile = profileId => axios.delete(`${databaseUrl}/profiles/${profileId}.json`);
 
-export default { getLobby, createLobby, updateLobby };
+export default {
+  getLobby,
+  createLobby,
+  updateLobby,
+  updateLobbyP1,
+  updateLobbyP2,
+};
