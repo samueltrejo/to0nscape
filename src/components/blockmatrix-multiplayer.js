@@ -120,6 +120,7 @@ class BlockMatrixMultiplayer extends React.Component {
       playerMovementSpeed: 5,
       obstacleDropSpeed: 25,
       obstacleSpeed: 10,
+      previousObstacle: '',
       player1Left: false,
       player1Right: false,
       player2Left: false,
@@ -134,6 +135,7 @@ class BlockMatrixMultiplayer extends React.Component {
     $('body').on('keyup', this.stopPlayer);
 
     firebase.database().ref(`lobbies/${this.lobbyId}`).on('value', this.updatePlayer, this.catchError);
+    firebase.database().ref(`lobbies/${this.lobbyId}/obstacle`).on('value', this.updateObstacles, this.catchError);
     this.movePlayerInterval = setInterval(this.updatePlayerPos, this.gameDefaultValues.movePlayerIntervalSpeed);
     this.setObstaclesInterval = setInterval(this.launchObstacles, this.gameDefaultValues.launchObstaclesIntervalSpeed);
   }
@@ -150,14 +152,13 @@ class BlockMatrixMultiplayer extends React.Component {
   // PLAYER MOVEMENT
 
   updatePlayer = (data) => {
+    // console.error(data.val().obstacle);
+    // this.dropObstacle(data.val().obstacle);
     if (this.state.player === 'player1') {
       this.lobby.player2Pos = data.val().player2Pos;
     }
     if (this.state.player === 'player2') {
       this.lobby.player1Pos = data.val().player1Pos;
-    }
-    if (this.state.player === 'player1') {
-      // console.error(data.val().obstacle);
     }
     $('.player1').css('left', `${data.val().player1Pos}px`);
     $('.player2').css('left', `${data.val().player2Pos}px`);
@@ -241,6 +242,11 @@ class BlockMatrixMultiplayer extends React.Component {
 
   // OBSTACLE GENERATION
 
+  updateObstacles = (data) => {
+    this.dropObstacle(data.val());
+    console.error(data.val());
+  }
+
   randomObstacle = () => {
     const randomNum = Math.floor(Math.random() * 20);
     const obstacle = this.gameDefaultValues.obstacleIds[randomNum];
@@ -248,29 +254,37 @@ class BlockMatrixMultiplayer extends React.Component {
   }
 
   dropObstacle = (obstacle) => {
-    const obstaclePos = parseInt($(`.${obstacle}`).css('top'), 10);
+    // const obstaclePos = parseInt($(`.${obstacle}`).css('top'), 10);
     const border = parseInt($('.border').css('top'), 10) + 16;
-    if (obstaclePos === -16 || obstaclePos >= border - this.gameDefaultValues.obstacleSpeed) {
-      for (let i = 0; i <= border; i += this.gameDefaultValues.obstacleSpeed) {
+    // if (obstaclePos === -16 || obstaclePos >= border - this.gameDefaultValues.obstacleSpeed) {
+    for (let i = 0; i <= border; i += this.gameDefaultValues.obstacleSpeed) {
+      setTimeout(() => {
+        $(`.${obstacle}`).css('top', `${i}px`);
+        // lobbiesData.updateObstaclePos(i, obstacle, this.lobbyId);
+      }, this.gameDefaultValues.obstacleDropSpeed * i);
+      if (i >= border - this.gameDefaultValues.obstacleSpeed) {
         setTimeout(() => {
-          $(`.${obstacle}`).css('top', `${i}px`);
+          $(`.${obstacle}`).css('top', '-16px');
           // lobbiesData.updateObstaclePos(i, obstacle, this.lobbyId);
         }, this.gameDefaultValues.obstacleDropSpeed * i);
-        if (i >= border - this.gameDefaultValues.obstacleSpeed) {
-          setTimeout(() => {
-            $(`.${obstacle}`).css('top', '-16px');
-            // lobbiesData.updateObstaclePos(i, obstacle, this.lobbyId);
-          }, this.gameDefaultValues.obstacleDropSpeed * i);
-        }
+        // }
       }
     }
   }
 
   launchObstacles = () => {
     const obstacle = this.randomObstacle();
+    if (this.gameDefaultValues.previousObstacle !== obstacle && this.state.player === 'player1') {
+      const obstaclePos = parseInt($(`.${obstacle}`).css('top'), 10);
+      const border = parseInt($('.border').css('top'), 10) + 16;
+      if (obstaclePos === -16 || obstaclePos >= border - this.gameDefaultValues.obstacleSpeed) {
+        this.gameDefaultValues.previousObstacle = obstacle;
+        // console.error(obstacle);
+        lobbiesData.updateObstacle(JSON.stringify(obstacle), this.lobbyId);
+      }
+    }
     // this.dropObstacle(obstacle);
-    lobbiesData.updateObstacle(JSON.stringify(obstacle), this.lobbyId).then().catch(error => console.error(error));
-    console.error(obstacle, this.lobbyId);
+    // console.error(obstacle, this.lobbyId);
   };
 
   componentDidMount() {
