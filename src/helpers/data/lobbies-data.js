@@ -41,6 +41,7 @@ const updateLobby = (lobby, lobbyId) => axios.put(`${databaseUrl}/lobbies/${lobb
 
 const updateLobbyP1 = (player1Pos, lobbyId) => axios.put(`${databaseUrl}/lobbies/${lobbyId}/player1Pos.json`, player1Pos);
 const updateLobbyP2 = (player2Pos, lobbyId) => axios.put(`${databaseUrl}/lobbies/${lobbyId}/player2Pos.json`, player2Pos);
+const updateObstacle = (obstacle, lobbyId) => axios.put(`${databaseUrl}/lobbies/${lobbyId}/obstacle.json`, obstacle);
 
 // const updateProfile = (profileId, profile) => axios.put(`${databaseUrl}/profiles/${profileId}.json`, profile);
 
@@ -52,4 +53,5 @@ export default {
   updateLobby,
   updateLobbyP1,
   updateLobbyP2,
+  updateObstacle,
 };

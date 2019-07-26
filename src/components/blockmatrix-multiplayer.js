@@ -5,7 +5,6 @@ import 'firebase/database';
 import $ from 'jquery';
 
 import profileData from '../helpers/data/profile-data';
-// import scoresData from '../helpers/data/scores-data';
 import lobbiesData from '../helpers/data/lobbies-data';
 
 class BlockMatrixMultiplayer extends React.Component {
@@ -25,7 +24,6 @@ class BlockMatrixMultiplayer extends React.Component {
   // MULTIPLAYER LOBBY
 
   changePlayer1Status = () => {
-    console.error('test');
     const { lobby, player } = this.state;
     if (player === 'player1' && this.lobbyId !== undefined) {
       if (lobby.player1Ready) {
@@ -111,17 +109,23 @@ class BlockMatrixMultiplayer extends React.Component {
     this.lobby = this.state.lobby;
     this.lobby.player1Pos = 0;
     this.lobby.player2Pos = 0;
+    this.lobby.obstacle = '';
+
     delete this.lobby.id;
-    console.error(this.state.lobby);
 
     this.gameDefaultValues = {
       gameScreenWidth: 0,
-      movePlayerIntervalSpeed: 100,
-      playerMovementSpeed: 1,
+      movePlayerIntervalSpeed: 25,
+      launchObstaclesIntervalSpeed: 1000,
+      playerMovementSpeed: 5,
+      obstacleDropSpeed: 25,
+      obstacleSpeed: 10,
       player1Left: false,
       player1Right: false,
       player2Left: false,
       player2Right: false,
+      obstacleIds: ['obstacle1', 'obstacle2', 'obstacle3', 'obstacle4', 'obstacle5', 'obstacle6', 'obstacle7', 'obstacle8', 'obstacle9', 'obstacle10',
+        'obstacle11', 'obstacle12', 'obstacle13', 'obstacle14', 'obstacle15', 'obstacle16', 'obstacle17', 'obstacle18', 'obstacle19', 'obstacle20'],
     };
 
     this.getDefaultValues();
@@ -131,6 +135,7 @@ class BlockMatrixMultiplayer extends React.Component {
 
     firebase.database().ref(`lobbies/${this.lobbyId}`).on('value', this.updatePlayer, this.catchError);
     this.movePlayerInterval = setInterval(this.updatePlayerPos, this.gameDefaultValues.movePlayerIntervalSpeed);
+    this.setObstaclesInterval = setInterval(this.launchObstacles, this.gameDefaultValues.launchObstaclesIntervalSpeed);
   }
 
   getDefaultValues = () => {
@@ -150,6 +155,9 @@ class BlockMatrixMultiplayer extends React.Component {
     }
     if (this.state.player === 'player2') {
       this.lobby.player1Pos = data.val().player1Pos;
+    }
+    if (this.state.player === 'player1') {
+      // console.error(data.val().obstacle);
     }
     $('.player1').css('left', `${data.val().player1Pos}px`);
     $('.player2').css('left', `${data.val().player2Pos}px`);
@@ -230,6 +238,40 @@ class BlockMatrixMultiplayer extends React.Component {
       this.gameDefaultValues.player2Right = false;
     }
   }
+
+  // OBSTACLE GENERATION
+
+  randomObstacle = () => {
+    const randomNum = Math.floor(Math.random() * 20);
+    const obstacle = this.gameDefaultValues.obstacleIds[randomNum];
+    return obstacle;
+  }
+
+  dropObstacle = (obstacle) => {
+    const obstaclePos = parseInt($(`.${obstacle}`).css('top'), 10);
+    const border = parseInt($('.border').css('top'), 10) + 16;
+    if (obstaclePos === -16 || obstaclePos >= border - this.gameDefaultValues.obstacleSpeed) {
+      for (let i = 0; i <= border; i += this.gameDefaultValues.obstacleSpeed) {
+        setTimeout(() => {
+          $(`.${obstacle}`).css('top', `${i}px`);
+          // lobbiesData.updateObstaclePos(i, obstacle, this.lobbyId);
+        }, this.gameDefaultValues.obstacleDropSpeed * i);
+        if (i >= border - this.gameDefaultValues.obstacleSpeed) {
+          setTimeout(() => {
+            $(`.${obstacle}`).css('top', '-16px');
+            // lobbiesData.updateObstaclePos(i, obstacle, this.lobbyId);
+          }, this.gameDefaultValues.obstacleDropSpeed * i);
+        }
+      }
+    }
+  }
+
+  launchObstacles = () => {
+    const obstacle = this.randomObstacle();
+    // this.dropObstacle(obstacle);
+    lobbiesData.updateObstacle(JSON.stringify(obstacle), this.lobbyId).then().catch(error => console.error(error));
+    console.error(obstacle, this.lobbyId);
+  };
 
   componentDidMount() {
     // this.launchGame();
@@ -477,14 +519,35 @@ class BlockMatrixMultiplayer extends React.Component {
     const { lobby } = this.state;
     return (
       <div className="BlockMatrix p-5 vh-100">
-        <div className="game-screen h-100 bg-dark position-relative overflow-hidden">
+        <div className="game-screen multiplayer-screen h-100 m-auto bg-dark position-relative overflow-hidden">
           <div className="border bg-info position-absolute"></div>
-          {this.state.obstacles}
 
-          <div className="player1 bg-white position-absolute"></div>
-          <div className="player2 bg-white position-absolute"></div>
+          <div className="obstacle1 obstacle bg-info position-absolute"></div>
+          <div className="obstacle2 obstacle bg-info position-absolute"></div>
+          <div className="obstacle3 obstacle bg-info position-absolute"></div>
+          <div className="obstacle4 obstacle bg-info position-absolute"></div>
+          <div className="obstacle5 obstacle bg-info position-absolute"></div>
+          <div className="obstacle6 obstacle bg-info position-absolute"></div>
+          <div className="obstacle7 obstacle bg-info position-absolute"></div>
+          <div className="obstacle8 obstacle bg-info position-absolute"></div>
+          <div className="obstacle9 obstacle bg-info position-absolute"></div>
+          <div className="obstacle10 obstacle bg-info position-absolute"></div>
+          <div className="obstacle11 obstacle bg-info position-absolute"></div>
+          <div className="obstacle13 obstacle bg-info position-absolute"></div>
+          <div className="obstacle14 obstacle bg-info position-absolute"></div>
+          <div className="obstacle15 obstacle bg-info position-absolute"></div>
+          <div className="obstacle16 obstacle bg-info position-absolute"></div>
+          <div className="obstacle17 obstacle bg-info position-absolute"></div>
+          <div className="obstacle18 obstacle bg-info position-absolute"></div>
+          <div className="obstacle19 obstacle bg-info position-absolute"></div>
+          <div className="obstacle20 obstacle bg-info position-absolute"></div>
+
+
+          <div className="player1 bg-primary position-absolute"></div>
+          <div className="player2 bg-danger position-absolute"></div>
 
           <div className="p-3 text-white position-absolute">Score: <span className="score">0</span></div>
+
           <div className="h-100 d-flex justify-content-center align-items-center">
 
             <div className="announcer display-1 text-white"></div>

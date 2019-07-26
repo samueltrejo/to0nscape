@@ -98,8 +98,70 @@ a.btn {
 .obstacle {
   height: 16px;
   top: -16px;
+  width: 5%;
   // width: 32px;
   // border: 1px solid white;
+}
+
+.obstacle1 {
+  left: 0%;
+}
+.obstacle2 {
+  left: 5%;
+}
+.obstacle3 {
+  left: 10%;
+}
+.obstacle4 {
+  left: 15%;
+}
+.obstacle5 {
+  left: 20%;
+}
+.obstacle6 {
+  left: 25%;
+}
+.obstacle7 {
+  left: 30%;
+}
+.obstacle8 {
+  left: 35%;
+}
+.obstacle9 {
+  left: 40%;
+}
+.obstacle10 {
+  left: 45%;
+}
+.obstacle11 {
+  left: 50%;
+}
+.obstacle12 {
+  left: 55%;
+}
+.obstacle13 {
+  left: 60%;
+}
+.obstacle14 {
+  left: 65%;
+}
+.obstacle15 {
+  left: 70%;
+}
+.obstacle16 {
+  left: 75%;
+}
+.obstacle17 {
+  left: 80%;
+}
+.obstacle18 {
+  left: 85%;
+}
+.obstacle19 {
+  left: 90%;
+}
+.obstacle20 {
+  left: 95%;
 }
 
 .announcer {
@@ -114,4 +176,9 @@ a.btn {
 
 .hover-pointer {
   cursor: pointer;
+}
+
+.multiplayer-screen {
+  width: 1280px;
+  height: 720px;
 }
