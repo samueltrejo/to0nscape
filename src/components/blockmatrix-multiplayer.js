@@ -105,6 +105,31 @@ class BlockMatrixMultiplayer extends React.Component {
     }, 3000);
   }
 
+  gameOver = () => {
+    clearInterval(this.movePlayerInterval);
+    clearInterval(this.setObstaclesInterval);
+    $('body').off('keydown', this.movePlayer);
+    $('body').off('keyup', this.stopPlayer);
+
+    this.endGameScreen();
+    $('.announcer').fadeIn();
+  }
+
+  endGameScreen = () => {
+    let endGameInfo = '<div>You Lose!</div><div class="d-flex">';
+    endGameInfo += '<button class="to-start btn btn-outline-light ml-auto mr-3">Back</button>';
+    endGameInfo += '<button class="retry btn btn-outline-light">Try Again</button></div>';
+    $('.announcer').html(endGameInfo);
+    $('.to-start').off('click', this.toStart);
+    $('.retry').off('click', this.launchGame);
+    $('.to-start').on('click', this.toStart);
+    $('.retry').on('click', this.launchGame);
+  }
+
+  toStart = () => {
+    this.props.history.push('/blockmatrix-startscreen');
+  }
+
   startGame = () => {
     this.lobby = this.state.lobby;
     this.lobby.player1Pos = 0;
@@ -188,7 +213,7 @@ class BlockMatrixMultiplayer extends React.Component {
     if (player === 'player2' && player2Right && player2Pos < gameScreenWidth - 19) {
       player2Pos += playerMovementSpeed;
     }
-
+    this.collisionCheck();
     if (player === 'player1' && this.lobbyId !== undefined) {
       this.lobby.player1Pos = player1Pos;
       lobbiesData.updateLobbyP1(this.lobby.player1Pos, this.lobbyId);
@@ -244,7 +269,6 @@ class BlockMatrixMultiplayer extends React.Component {
 
   updateObstacles = (data) => {
     this.dropObstacle(data.val());
-    console.error(data.val());
   }
 
   randomObstacle = () => {
@@ -286,6 +310,33 @@ class BlockMatrixMultiplayer extends React.Component {
     // this.dropObstacle(obstacle);
     // console.error(obstacle, this.lobbyId);
   };
+
+  // COLLISION DETECTION
+
+  getDimensions = (target) => {
+  // console.error($(`.${target}`)[0]);
+    const dimensions = {
+      lx: $(target).position().left,
+      ty: $(target).position().top,
+      rx: $(target).position().left + $(target).width(),
+      by: $(target).position().top + $(target).height(),
+    };
+    return dimensions;
+  };
+
+  collisionCheck = () => {
+    const player1 = this.getDimensions('.player1');
+    const player2 = this.getDimensions('.player2');
+    this.gameDefaultValues.obstacleIds.forEach((obstacleId) => {
+      const obstacle = this.getDimensions(`.${obstacleId}`);
+      if (player1.lx < obstacle.rx && player1.rx > obstacle.lx && player1.ty < obstacle.by && player1.by > obstacle.ty) {
+        this.gameOver();
+      }
+      if (player2.lx < obstacle.rx && player2.rx > obstacle.lx && player2.ty < obstacle.by && player2.by > obstacle.ty) {
+        this.gameOver();
+      }
+    });
+  }
 
   componentDidMount() {
     // this.launchGame();
@@ -547,6 +598,7 @@ class BlockMatrixMultiplayer extends React.Component {
           <div className="obstacle9 obstacle bg-info position-absolute"></div>
           <div className="obstacle10 obstacle bg-info position-absolute"></div>
           <div className="obstacle11 obstacle bg-info position-absolute"></div>
+          <div className="obstacle12 obstacle bg-info position-absolute"></div>
           <div className="obstacle13 obstacle bg-info position-absolute"></div>
           <div className="obstacle14 obstacle bg-info position-absolute"></div>
           <div className="obstacle15 obstacle bg-info position-absolute"></div>
