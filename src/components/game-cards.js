@@ -8,12 +8,14 @@ class GameCard extends React.Component {
     return (
       <div className="GameCard col-md-6 col-lg-4 mb-4">
         <div className="card border-0 rounded-0 box-shadow">
-          <img src={game.image} className="game-image card-img rounded-0" alt="..." />
-          <div className="card-body">
-            <h5 className="card-title">{game.name}</h5>
-            <p className="card-text">{game.description}</p>
-            <Link className="text-dark" to={game.link}><i className="fas fa-gamepad fs-2"></i></Link>
+          <img src={game.image} className="home-images card-img rounded-0" alt="..." />
+        </div>
+        <div className="card-body">
+          <div className="d-flex align-items-center">
+            <Link className="btn text-aqua d-flex align-items-center p-0 mr-1" to={game.link}><i className="fas fa-gamepad fs-2"></i></Link>
+            <h5 className="card-title font-weight-bold mb-0">{game.name}</h5>
           </div>
+          <p className="card-text">{game.description}</p>
         </div>
       </div>
     );

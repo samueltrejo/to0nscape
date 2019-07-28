@@ -31,21 +31,23 @@ class Navbar extends React.Component {
       : (<Link to="/new-profile" className="nav-item nav-link">Profile</Link>);
 
     return (
-      <div>
-        <div className="navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column p-0">
+      <div className="h-100">
+        <div className="navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column p-0 h-100">
 
           {carousel ? (<HomeCarousel />) : ('')}
-          {carousel ? (<div className="backdrop position-absolute"></div>) : ('')}
+          {/* {carousel ? (<div className="backdrop position-absolute"></div>) : ('')} */}
 
           <div className={carousel ? ('HomeNavbar container position-absolute') : ('HomeNavbar container')}>
-            <Link to="/home" className="navbar-brand">To0nscape</Link>
+            <Link to="/home" className="font-weight-bold text-aqua navbar-brand">To0nscape</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
               <div className="navbar-nav">
                 {authed ? (profileLink) : ('')}
+                {authed ? (<Link to="/leaderboards" className="nav-item nav-link">About Us</Link>) : ('')}
                 {authed ? (<Link to="/leaderboards" className="nav-item nav-link">Leaderboards</Link>) : ('')}
+                {authed ? (<Link to="/leaderboards" className="nav-item nav-link">Forums</Link>) : ('')}
                 {authed ? (<span className="nav-item nav-link" onClick={this.logout}>Logout</span>) : ('')}
                 {!authed ? (<span className="nav-item nav-link" onClick={this.login}>Sign In</span>) : ('')}
               </div>

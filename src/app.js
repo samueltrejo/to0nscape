@@ -46,9 +46,11 @@ class App extends React.Component {
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ authed: true, loaded: true });
+        this.setState({ authed: true });
+        setTimeout(() => this.setState({ loaded: true }), 1000);
       } else {
-        this.setState({ authed: false, loaded: true });
+        this.setState({ authed: false });
+        setTimeout(() => this.setState({ loaded: true }), 1000);
       }
     });
   }
@@ -61,7 +63,7 @@ class App extends React.Component {
     const { authed, loaded } = this.state;
 
     return (
-      <div className="App">
+      <div className="App h-100">
         {!loaded ? (<LoadingScreen />)
           : (
             <BrowserRouter>
