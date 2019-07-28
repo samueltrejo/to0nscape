@@ -15,6 +15,7 @@ import NewProfile from './components/new-profile';
 import MyProfile from './components/my-profile';
 import BlockMatrixStartscreen from './components/blockmatrix-startscreen';
 import BlockMatrix from './components/blockmatrix';
+import BlockMatrixMultiplayer from './components/blockmatrix-multiplayer';
 import Leaderboards from './components/leaderboards';
 
 import './styles/app.scss';
@@ -69,6 +70,7 @@ class App extends React.Component {
               <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} />
               <PrivateRoute path="/profile/:username" component={MyProfile} authed={authed} />
               <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} />
+              <PrivateRoute path="/blockmatrix/:lobby" component={BlockMatrixMultiplayer} authed={authed} />
               <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} />
 
               <Redirect from="*" to="/auth" />
