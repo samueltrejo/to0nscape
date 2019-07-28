@@ -326,6 +326,10 @@ class BlockMatrixMultiplayer extends React.Component {
     this.initLobby();
   }
 
+  componentWillUnmount() {
+    this.gameOver();
+  }
+
   render() {
     const { lobby } = this.state;
     return (

@@ -1,5 +1,5 @@
 body {
-  background-color: whitesmoke;
+  background-color: aquamarine;
 }
 
 .carousel-image  {
@@ -181,4 +181,50 @@ a.btn {
 .multiplayer-screen {
   width: 1280px;
   height: 720px!important;
+}
+
+.loading-page-container {
+  box-sizing: border-box;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  bottom: -7px;
+  left: 45px;
+  border-radius: 10px;
+}
+
+.loading-circle1 {
+  position: absolute;
+  border: 3px solid white;
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  animation: rotate1 1s infinite linear;
+}
+
+.loading-circle2 {
+  position: absolute;
+  border: 3px solid white;
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  animation: rotate2 1s infinite linear;
+}
+
+@keyframes rotate1 {
+  0% {transform: rotateZ(0)}
+  100% {transform: rotateZ(360deg)}
+}
+
+@keyframes rotate2 {
+  0% {transform: rotateZ(0)}
+  100% {transform: rotateZ(-360deg)}
 }
