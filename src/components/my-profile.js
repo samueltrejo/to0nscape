@@ -68,9 +68,8 @@ class MyProfile extends React.Component {
     const { profile, edit } = this.state;
     return (
       <div>
-        <Navbar authed={this.props.authed} carousel={false} profile={profile} />
-        <div className="hero-image overflow-hidden position-relative">
-          <img src="https://i.imgur.com/6QPY9Cz.jpg" className="img-fluid" alt="..." />
+        <Navbar authed={this.props.authed} carousel={false} profile={profile} hero={true} />
+        {/* <div className="hero-image overflow-hidden position-relative">
             {edit ? (
               <div className="edit-profile position-absolute">
                 <button className="btn btn-dark mr-3" onClick={this.cancelEditState}>Cancel</button>
@@ -82,11 +81,20 @@ class MyProfile extends React.Component {
                 <button className="btn btn-dark" data-toggle="modal" data-target="#delete-confirmation" onClick={this.openConfirmDelete}>Delete Profile</button>
               </div>
               )}
-        </div>
+        </div> */}
         <div className="container">
           <div className="row">
 
-            <div className="card col-2 p-0 m-0">
+          <div className="col-4">
+            <div class="card">
+              <img src="https://i.imgur.com/kPrfxPY.jpg" class="card-img-top" alt="..." />
+              <div class="card-body">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+
+            {/* <div className="card col-2 p-0 m-0">
               <div className="profile-picture">
                 {edit ? (<input type="text" className="form-control mb-4" placeholder="Profile Picture" value={profile.image} onChange={this.updateImage} />)
                   : (<img src={profile.image} className="card-img-top" alt="..." />)}
@@ -97,7 +105,7 @@ class MyProfile extends React.Component {
                 {edit ? (<input type="text" className="form-control mb-4" placeholder="Bio" value={profile.bio} onChange={this.updateBio} />)
                   : (<p className="lead">{profile.bio}</p>)}
               </div>
-            </div>
+            </div> */}
 
             <div className="col-10 p-5 m-0">
               <div className="card h-100">Avatars Section</div>

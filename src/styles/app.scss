@@ -1,16 +1,20 @@
-body {
-  background-color: aquamarine;
+html, body, #root {
+  height: 100%;
+  background-color: whitesmoke;
 }
 
 .carousel-image  {
-  opacity: 0.5;
+  opacity: 0;
+}
+
+.home-images {
+  height: 250px;
 }
 
 .backdrop {
-  background-image: linear-gradient(180deg,whitesmoke,#505a78);
+  background-color: rgba($color: aquamarine, $alpha: 0.5);
   height: 100%;
   width: 100%;
-  opacity: 0.7;
 }
 
 .HomeNavbar {
@@ -31,10 +35,6 @@ body {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-.card-img {
-  width: 300px!important;
-}
-
 textarea {
   resize: none!important;
 }
@@ -44,7 +44,20 @@ textarea {
 }
 
 .hero-image {
-  height: 38rem;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+.overlay {
+  background-color: rgba(0,0,0,0.7)
+}
+
+.hero-image-container {
+  height: 30rem;
+  background-image: url(https://i.imgur.com/E7pGflz.jpg);
+  background-position: center;
+  background-size: cover;
 }
 
 .profile-picture {
@@ -185,38 +198,52 @@ a.btn {
 
 .loading-page-container {
   box-sizing: border-box;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100px;
+  height: 100px;
 }
 
 .dot {
   position: absolute;
   height: 15px;
   width: 15px;
-  background-color: white;
+  background-color: aquamarine;
   bottom: -7px;
   left: 45px;
   border-radius: 10px;
 }
 
 .loading-circle1 {
-  position: absolute;
-  border: 3px solid white;
+  border: 3px solid aquamarine;
   height: 100px;
   width: 100px;
-  border-radius: 100px;
   animation: rotate1 1s infinite linear;
 }
 
 .loading-circle2 {
-  position: absolute;
-  border: 3px solid white;
+  border: 3px solid aquamarine;
   height: 100px;
   width: 100px;
-  border-radius: 100px;
   animation: rotate2 1s infinite linear;
+}
+
+.bg-aqua {
+  background-color: aquamarine;
+}
+
+.text-aqua {
+  color: aquamarine;
+}
+
+.home-heading {
+  height: 10rem;
+}
+
+.mt-6 {
+  margin-top: 7rem;
+}
+
+.bg-darkopaque {
+  background-color: rgba($color: #343a40, $alpha: 0.8);
 }
 
 @keyframes rotate1 {
