@@ -44,7 +44,20 @@ textarea {
 }
 
 .hero-image {
-  height: 38rem;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+.overlay {
+  background-color: rgba(0,0,0,0.7)
+}
+
+.hero-image-container {
+  height: 30rem;
+  background-image: url(https://i.imgur.com/E7pGflz.jpg);
+  background-position: center;
+  background-size: cover;
 }
 
 .profile-picture {
