@@ -17,21 +17,21 @@ class HomeCarousel extends React.Component {
             </ol>
             <div className="carousel-inner h-100">
               <div className="carousel-item active h-100" style={{ backgroundImage: `url(${homeImage2})`, backgroundPosition: 'center top', backgroundSize: 'cover' }}>
-                <img src={homeImage1} className="carousel-image w-100 h-100" alt="by JESHOOTS.COM on Unsplash" />
+                <img src={homeImage1} className="carousel-image w-100 h-100" alt="by JESHOOTS.COM on Unsplash" onLoad={this.props.contentLoaded} />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>First slide label</h5>
                   <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                 </div>
               </div>
               <div className="carousel-item h-100" style={{ backgroundImage: `url(${homeImage1})`, backgroundPosition: 'center top', backgroundSize: 'cover' }}>
-                <img src={homeImage1} className="carousel-image w-100 h-100" alt="by Sean Do on Unsplash" />
+                <img src={homeImage2} className="carousel-image w-100 h-100" alt="by Sean Do on Unsplash" onLoad={this.props.contentLoaded} />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>Second slide label</h5>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 </div>
               </div>
               <div className="carousel-item h-100" style={{ backgroundImage: `url(${homeImage3})`, backgroundPosition: 'center top', backgroundSize: 'cover' }}>
-                <img src={homeImage1} className="carousel-image w-100 h-100" alt="by Florian Olivo on Unsplash" />
+                <img src={homeImage3} className="carousel-image w-100 h-100" alt="by Florian Olivo on Unsplash" onLoad={this.props.contentLoaded} />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>Third slide label</h5>
                   <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>

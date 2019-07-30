@@ -64,26 +64,29 @@ class App extends React.Component {
 
     return (
       <div className="App h-100">
-        {!loaded ? (<LoadingScreen />)
-          : (
-            <BrowserRouter>
-              <React.Fragment>
-                <Switch>
-                  <PublicRoute path="/auth" component={Home} authed={authed} />
-                  <PrivateRoute path="/home" component={Home} authed={authed} />
+        <div className={loaded ? ('app-loading h-100 d-none') : ('LoadingScreen h-100')}>
+          <LoadingScreen />
+        </div>
 
-                  <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} />
-                  <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} />
-                  <PrivateRoute path="/profile/:username" component={MyProfile} authed={authed} />
-                  <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} />
-                  <PrivateRoute path="/blockmatrix/:lobby" component={BlockMatrixMultiplayer} authed={authed} />
-                  <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} />
+        <div className={loaded ? ('app-content h-100') : ('app-content h-100 d-none')}>
+          <BrowserRouter>
+            <React.Fragment>
+              <Switch>
+                <PublicRoute path="/auth" component={Home} authed={authed} />
+                <PrivateRoute path="/home" component={Home} authed={authed} />
 
-                  <Redirect from="*" to="/auth" />
-                </Switch>
-              </React.Fragment>
-            </BrowserRouter>
-          )}
+                <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} />
+                <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} />
+                <PrivateRoute path="/profile/:username" component={MyProfile} authed={authed} />
+                <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} />
+                <PrivateRoute path="/blockmatrix/:lobby" component={BlockMatrixMultiplayer} authed={authed} />
+                <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} />
+
+                <Redirect from="*" to="/auth" />
+              </Switch>
+            </React.Fragment>
+          </BrowserRouter>
+        </div>
       </div>
     );
   }
