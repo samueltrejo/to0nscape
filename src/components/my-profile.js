@@ -4,6 +4,7 @@ import 'firebase/auth';
 
 import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
+import ProfileAvatars from './profile-avatars';
 
 import profileData from '../helpers/data/profile-data';
 
@@ -73,11 +74,11 @@ class MyProfile extends React.Component {
     const { profile, edit, loaded } = this.state;
     return (
       <div className="Profile">
-        <div className={loaded ? ('app-loading h-100 d-none') : ('LoadingScreen h-100')}>
+        <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
           <LoadingScreen />
         </div>
 
-        <div className={loaded ? ('app-content h-100') : ('app-content h-100 d-none')}>
+        <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
           <Navbar authed={this.props.authed} carousel={false} profile={profile} hero={true} />
 
           <div className="position-relative container w-100">
@@ -85,7 +86,7 @@ class MyProfile extends React.Component {
               <div className="row w-100">
 
                 <div className="col-4 w-100">
-                  <div className="card profile-card rounded-0 border-0">
+                  <div className="card profile-card rounded-0 border-0 h-100">
                     {edit ? (<input type="text" className="w-100 form-control mb-4" placeholder="Profile Picture" value={profile.image} onChange={this.updateImage} />)
                       : (<img src={profile.image} className="card-img-top rounded-0" alt="..." />)}
                     <div className="card-body">
@@ -99,9 +100,9 @@ class MyProfile extends React.Component {
                   </div>
                 </div>
 
-                <div className="col-8">
+                <div className="col-8 mt-5">
                   <div className="d-flex justify-content-between">
-                    <div className="display-4 text-aqua"><strong>{profile.username}</strong></div>
+                    <div className="display-4 text-white"><strong>{profile.username}</strong></div>
                     <div>
                       {edit ? (
                       <div className="edit-profile">
@@ -118,14 +119,24 @@ class MyProfile extends React.Component {
 
                   <div class="card mt-5">
                     <div class="row no-gutters">
-                      <div class="col-md-4">
-                        <img src="..." class="card-img" alt="..." />
-                      </div>
-                      <div class="col-md-8">
+                      <div class="col-12">
                         <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                          <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                              <span class="nav-link lead active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Avatars</span>
+                            </li>
+                            <li class="nav-item">
+                              <span class="nav-link lead" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Scores</span>
+                            </li>
+                            <li class="nav-item">
+                              <span class="nav-link lead" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">My Posts</span>
+                            </li>
+                          </ul>
+                          <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><ProfileAvatars /></div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"></div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -137,22 +148,6 @@ class MyProfile extends React.Component {
               </div>
             </div>
           </div>
-
-          {/* <div className="container">
-
-            <div className="row">
-
-              <div className="col-8 p-5 m-0">
-                <div className="card h-100">Avatars Section</div>
-              </div>
-
-            </div>
-            <div className="row">
-              <div className="col-10 p-5 m-0">
-                <div className="card h-100">Scores Section</div>
-              </div>
-            </div>
-          </div> */}
 
           <div id="delete-confirmation" className="modal fade">
             <div className="modal-dialog">

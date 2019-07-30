@@ -64,11 +64,11 @@ class App extends React.Component {
 
     return (
       <div className="App h-100">
-        <div className={loaded ? ('app-loading h-100 d-none') : ('LoadingScreen h-100')}>
+        <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
           <LoadingScreen />
         </div>
 
-        <div className={loaded ? ('app-content h-100') : ('app-content h-100 d-none')}>
+        <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
           <BrowserRouter>
             <React.Fragment>
               <Switch>
