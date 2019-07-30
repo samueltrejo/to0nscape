@@ -3,21 +3,21 @@
     "id": "about1",
     "name": "Our Games",
     "link": "/blockmatrix-startscreen",
-    "image": "https://i.imgur.com/LlxvrxT.jpg",
+    "image": "aboutImage1",
     "description": "Lorem ipsum dolor sit am consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna."
   },
   {
     "id": "about2",
     "name": "About Us",
     "link": "/battleship",
-    "image": "https://i.imgur.com/CWNifAL.jpg",
+    "image": "aboutImage2",
     "description": "Lorem ipsum dolor sit am consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna."
   },
   {
     "id": "about3",
     "name": "Forums",
     "link": "/clickmaestro",
-    "image": "https://i.imgur.com/iNM3cC0.jpg",
+    "image": "aboutImage3",
     "description": "Lorem ipsum dolor sit am consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna."
   }
 ]

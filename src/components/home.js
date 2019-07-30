@@ -31,7 +31,7 @@ class Home extends React.Component {
     const { profile } = this.state;
     const { authed } = this.props;
     return (
-      <div className="h-100">
+      <div className="Home h-100">
         <Navbar authed={authed} profile={profile} carousel={true} />
         <HomeAbout />
         <HomeGames />

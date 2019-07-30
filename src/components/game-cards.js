@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 class GameCard extends React.Component {
   render() {
-    const { game } = this.props;
+    const { game, gameImages } = this.props;
 
     return (
       <div className="GameCard col-md-6 col-lg-4 mb-4">
         <div className="card border-0 rounded-0 box-shadow">
-          <img src={game.image} className="home-images card-img rounded-0" alt="..." />
+          <img src={gameImages[game.image]} className="home-images card-img rounded-0" alt="..." />
         </div>
         <div className="card-body">
           <div className="d-flex align-items-center">
