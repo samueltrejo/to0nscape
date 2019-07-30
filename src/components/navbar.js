@@ -34,8 +34,8 @@ class Navbar extends React.Component {
       hero,
       heroUrl,
     } = this.props;
-    const profileLink = Object.keys(profile).length ? (<Link to={`/profile/${profile.username}`} className="nav-item nav-link">Profile</Link>)
-      : (<Link to="/new-profile" className="nav-item nav-link">Profile</Link>);
+    const profileLink = Object.keys(profile).length ? (<Link to={`/profile/${profile.username}`} className="nav-item nav-link"><i class="fas fa-user-ninja"></i> Profile</Link>)
+      : (<Link to="/new-profile" className="nav-item nav-link"><i class="fas fa-user-ninja"></i> Profile</Link>);
 
     return (
       <div className="h-100">
@@ -46,18 +46,18 @@ class Navbar extends React.Component {
           {hero ? (<NavbarHero heroUrl={heroUrl} />) : ('')}
 
           <div className={carousel ? ('HomeNavbar container position-absolute') : ('HomeNavbar container position-absolute')}>
-            <Link to="/home" className="font-weight-bold text-aqua navbar-brand">To0nscape</Link>
+            <Link to="/home" className="font-weight-bold text-aqua navbar-brand"><i class="fas fa-home"></i> To0nscape</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
               <div className="navbar-nav">
                 {authed ? (profileLink) : ('')}
-                {authed ? (<Link to="/leaderboards" className="nav-item nav-link">About Us</Link>) : ('')}
-                {authed ? (<Link to="/leaderboards" className="nav-item nav-link">Leaderboards</Link>) : ('')}
-                {authed ? (<Link to="/leaderboards" className="nav-item nav-link">Forums</Link>) : ('')}
-                {authed ? (<span className="nav-item nav-link" onClick={this.logout}>Logout</span>) : ('')}
-                {!authed ? (<span className="nav-item nav-link" onClick={this.login}>Sign In</span>) : ('')}
+                {authed ? (<Link to="/leaderboards" className="nav-item nav-link"><i class="fas fa-palette"></i> About Us</Link>) : ('')}
+                {authed ? (<Link to="/leaderboards" className="nav-item nav-link"><i class="fas fa-sliders-h"></i> Leaderboards</Link>) : ('')}
+                {authed ? (<Link to="/leaderboards" className="nav-item nav-link"><i class="fas fa-newspaper"></i> Forums</Link>) : ('')}
+                {authed ? (<span className="nav-item nav-link" onClick={this.logout}><i class="fas fa-bed"></i> Logout</span>) : ('')}
+                {!authed ? (<span className="nav-item nav-link" onClick={this.login}><i class="fab fa-google"></i> Sign In</span>) : ('')}
               </div>
             </div>
           </div>
