@@ -5,6 +5,7 @@ import 'firebase/auth';
 import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
 import ProfileAvatars from './profile-avatars';
+import ProfileScores from './profile-scores';
 
 import profileData from '../helpers/data/profile-data';
 
@@ -87,13 +88,13 @@ class MyProfile extends React.Component {
 
                 <div className="col-4 w-100">
                   <div className="card profile-card rounded-0 border-0 h-100">
-                    {edit ? (<input type="text" className="w-100 form-control mb-4" placeholder="Profile Picture" value={profile.image} onChange={this.updateImage} />)
+                    {edit ? (<div className="card-body"><input type="text" className="w-100 form-control mb-4" placeholder="Profile Picture" value={profile.image} onChange={this.updateImage} /></div>)
                       : (<img src={profile.image} className="card-img-top rounded-0" alt="..." />)}
                     <div className="card-body">
-                        <div className="lead mr-3">Username</div>
+                        {/* <div className="lead mr-3">Username</div> */}
                         {edit ? (<input type="text" className="form-control mb-4" placeholder="Username" value={profile.username} onChange={this.updateUsername} />)
                           : (<p className="lead mt-3"><strong>{profile.username}</strong></p>)}
-                      <div className="lead mt-3">About Me</div>
+                      {/* <div className="lead mt-3">About Me</div> */}
                       {edit ? (<input type="text" className="form-control mb-4" placeholder="Bio" value={profile.bio} onChange={this.updateBio} />)
                         : (<p className="lead mt-3">{profile.bio}</p>)}
                     </div>
@@ -117,25 +118,25 @@ class MyProfile extends React.Component {
                     </div>
                   </div>
 
-                  <div class="card mt-5">
-                    <div class="row no-gutters">
-                      <div class="col-12">
-                        <div class="card-body">
-                          <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                              <span class="nav-link lead active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Avatars</span>
+                  <div className="card mt-5">
+                    <div className="row no-gutters">
+                      <div className="col-12">
+                        <div className="card-body">
+                          <ul className="nav nav-tabs" id="myTab" role="tablist">
+                            <li className="nav-item">
+                              <span className="nav-link lead active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Avatars</span>
                             </li>
-                            <li class="nav-item">
-                              <span class="nav-link lead" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Scores</span>
+                            <li className="nav-item">
+                              <span className="nav-link lead" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Scores</span>
                             </li>
-                            <li class="nav-item">
-                              <span class="nav-link lead" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">My Posts</span>
+                            <li className="nav-item">
+                              <span className="nav-link lead" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">My Posts</span>
                             </li>
                           </ul>
-                          <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><ProfileAvatars /></div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"></div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
+                          <div className="tab-content" id="myTabContent">
+                            <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><ProfileAvatars /></div>
+                            <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><ProfileScores /></div>
+                            <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
                           </div>
                         </div>
                       </div>

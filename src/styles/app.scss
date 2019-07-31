@@ -254,6 +254,11 @@ a.btn {
   background-color: rgba($color: #343a40, $alpha: 0.8);
 }
 
+.avatar-images {
+  width: 100px;
+  height: auto;
+}
+
 @keyframes rotate1 {
   0% {transform: rotateZ(0)}
   100% {transform: rotateZ(360deg)}
