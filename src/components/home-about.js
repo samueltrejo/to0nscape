@@ -18,7 +18,7 @@ class HomeAbout extends React.Component {
       <div className="HomeAbout mt-6">
         <div className="home-heading mb-5 position-relative" style={{ backgroundImage: `url(${aboutHeader})`, backgroundPosition: 'center', backgroundSize: 'cover' }}>
           <div className="backdrop">
-            <div className="container lead text-white pt-3">About</div>
+            <div className="container display-4 text-white pt-3">About</div>
           </div>
         </div>
 

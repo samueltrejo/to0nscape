@@ -88,7 +88,7 @@ class MyProfile extends React.Component {
 
                 <div className="col-4 w-100">
                   <div className="card profile-card rounded-0 border-0 h-100">
-                    {edit ? (<div className="card-body"><input type="text" className="w-100 form-control mb-4" placeholder="Profile Picture" value={profile.image} onChange={this.updateImage} /></div>)
+                    {edit ? (<div className="m-4"><input type="text" className="w-100 form-control mb-4" placeholder="Profile Picture" value={profile.image} onChange={this.updateImage} /></div>)
                       : (<img src={profile.image} className="card-img-top rounded-0" alt="..." />)}
                     <div className="card-body">
                         {/* <div className="lead mr-3">Username</div> */}

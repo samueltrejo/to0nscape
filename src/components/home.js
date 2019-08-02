@@ -22,16 +22,20 @@ class Home extends React.Component {
       profileData.getMyProfile(uid)
         .then((profile) => {
           this.setState({ profile });
-          setTimeout(() => this.setState({ loaded: true }), 1000);
+          this.loadTimer = setTimeout(() => this.setState({ loaded: true }), 1000);
         })
         .catch(error => console.error(error));
     } else {
-      setTimeout(() => this.setState({ loaded: true }), 1000);
+      this.loadTimer = setTimeout(() => this.setState({ loaded: true }), 1000);
     }
   }
 
   componentDidMount() {
     this.getMyProfile();
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.loadTimer);
   }
 
   render() {
@@ -40,7 +44,7 @@ class Home extends React.Component {
     return (
       <div className="Home h-100">
         <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
-          <LoadingScreen />
+          {authed ? (<LoadingScreen />) : ('')}
         </div>
 
         <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
