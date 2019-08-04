@@ -4,9 +4,11 @@ import 'firebase/auth';
 
 import profileData from '../helpers/data/profile-data';
 import scoresData from '../helpers/data/scores-data';
+import heroUrl from '../images/leaderboards.jpg';
 
 import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
+import Footer from './footer';
 
 class Leaderboards extends React.Component {
   state = {
@@ -83,7 +85,7 @@ class Leaderboards extends React.Component {
         </div>
 
         <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
-          <Navbar authed={true} carousel={false} hero={true} profile={profile} />
+          <Navbar authed={true} carousel={false} hero={true} profile={profile} heroUrl={heroUrl} />
           <h3>Leaderboards</h3>
 
           <div className="container mt-5">
@@ -104,6 +106,7 @@ class Leaderboards extends React.Component {
               <div className="card-body"></div>
             </div>
           </div>
+          <Footer />
         </div>
       </div>
     );

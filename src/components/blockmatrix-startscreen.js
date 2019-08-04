@@ -8,9 +8,11 @@ import $ from 'jquery';
 
 import profileData from '../helpers/data/profile-data';
 import lobbiesData from '../helpers/data/lobbies-data';
+import heroUrl from '../images/games-card1.jpg';
 
 import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
+import Footer from './footer';
 
 class BlockMatrixStartscreen extends React.Component {
   state = {
@@ -82,13 +84,13 @@ class BlockMatrixStartscreen extends React.Component {
   render() {
     const { profile, loaded } = this.state;
     return (
-      <div className="BlockMatrixStartscreen">
+      <div className="BlockMatrixStartscreen h-100 position-relative">
         <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
           <LoadingScreen />
         </div>
 
         <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
-          <Navbar authed={true} carousel={false} profile={profile} />
+          <Navbar authed={true} hero={true} profile={profile} heroUrl={heroUrl} />
           <div id="start-screen" className="col-4 mx-auto mt-5">
             <div className="modal-content">
               <h1 className="display-4 mx-auto mb-0 mt-3">Block Matrix</h1>
@@ -120,6 +122,7 @@ class BlockMatrixStartscreen extends React.Component {
               </div>
             </div>
           </div>
+          <Footer bottom={true} />
         </div>
 
       </div>
