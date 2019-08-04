@@ -12,7 +12,6 @@ import heroUrl from '../images/games-card1.jpg';
 
 import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
-import Footer from './footer';
 
 class BlockMatrixStartscreen extends React.Component {
   state = {
@@ -48,9 +47,11 @@ class BlockMatrixStartscreen extends React.Component {
     const lobby = {
       player1: this.state.profile.username,
       player1Ready: false,
+      player1Present: false,
       player1Pos: 0,
       player2: '',
       player2Ready: false,
+      player2Present: false,
       player2Pos: 0,
       lobbyCode: this.generateLobbyCode(5),
     };
@@ -122,7 +123,6 @@ class BlockMatrixStartscreen extends React.Component {
               </div>
             </div>
           </div>
-          <Footer bottom={true} />
         </div>
 
       </div>

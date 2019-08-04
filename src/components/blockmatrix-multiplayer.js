@@ -61,6 +61,10 @@ class BlockMatrixMultiplayer extends React.Component {
     this.checkIfPlayersReady();
   }
 
+  destroyLobby = () => {
+    lobbiesData.deleteLobby(this.lobbyId);
+  }
+
   catchError = (error) => {
     console.error(error);
   };
@@ -77,9 +81,11 @@ class BlockMatrixMultiplayer extends React.Component {
             const lobbyCopy = lobby;
             if (lobby.player1 === profile.username) {
               this.setState({ player: 'player1' });
+              lobbyCopy.player1Present = true;
             } else if (lobby.player2 === '' || lobby.player2 === profile.username) {
               lobbyCopy.player2 = profile.username;
               this.setState({ player: 'player2' });
+              lobbyCopy.player1Present = true;
             }
             this.lobbyId = lobby.id;
             delete lobbyCopy.id;
@@ -328,6 +334,7 @@ class BlockMatrixMultiplayer extends React.Component {
 
   componentWillUnmount() {
     this.gameOver();
+    // this.destroyLobby();
   }
 
   render() {
