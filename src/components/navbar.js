@@ -38,10 +38,10 @@ class Navbar extends React.Component {
       : (<Link to="/new-profile" className="nav-item nav-link"><i className="fas fa-user-ninja"></i> Profile</Link>);
 
     return (
-      <div className="h-100">
+      <div className={carousel ? ('Navbar h-100') : ('Navbar')}>
         <div className="navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column p-0 h-100">
 
-          {carousel ? (<HomeCarousel contentLoaded={this.props.contentLoaded} />) : ('')}
+          {carousel ? (<HomeCarousel />) : ('')}
           {/* {carousel ? (<div className="backdrop position-absolute"></div>) : ('')} */}
           {hero ? (<NavbarHero heroUrl={heroUrl} />) : ('')}
 
