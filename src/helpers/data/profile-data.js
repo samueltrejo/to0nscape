@@ -22,6 +22,8 @@ const createProfile = profile => axios.post(`${databaseUrl}/profiles.json`, prof
 
 const updateProfile = (profileId, profile) => axios.put(`${databaseUrl}/profiles/${profileId}.json`, profile);
 
+const updateProfileAvatar = (profileId, avatar) => axios.put(`${databaseUrl}/profiles/${profileId}/avatar.json`, avatar);
+
 const deleteProfile = profileId => axios.delete(`${databaseUrl}/profiles/${profileId}.json`);
 
 export default {
@@ -29,4 +31,5 @@ export default {
   createProfile,
   updateProfile,
   deleteProfile,
+  updateProfileAvatar,
 };

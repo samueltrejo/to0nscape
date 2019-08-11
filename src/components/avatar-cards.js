@@ -1,10 +1,18 @@
 import React from 'react';
 
+import profileData from '../helpers/data/profile-data';
+
 class AvatarCard extends React.Component {
+  updateProfileAvatar = () => {
+    profileData.updateProfileAvatar(this.props.profileId, JSON.stringify(this.props.avatar.image))
+      .then(() => this.props.getMyProfile())
+      .catch(error => console.error(error));
+  }
+
   render() {
     const { avatar, avatarImages } = this.props;
     return (
-      <div className="GameCard col-6 mb-5">
+      <div className="GameCard col-6 mb-5" onClick={this.updateProfileAvatar}>
         <div className="card border-0 rounded-0">
           <img src={avatarImages[avatar.image]} className="avatar-images rounded-0 m-auto" alt="..." />
         </div>

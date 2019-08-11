@@ -93,12 +93,14 @@ class MyProfile extends React.Component {
                       {edit ? (<div className="m-4"><input type="text" className="w-100 form-control mb-4" placeholder="Profile Picture" value={profile.image} onChange={this.updateImage} /></div>)
                         : (<img src={profile.image} className="card-img-top rounded-0" alt="..." />)}
                       <div className="card-body">
-                          {/* <div className="lead mr-3">Username</div> */}
+                          <div className="lead mr-3"><strong>Username</strong></div>
                           {edit ? (<input type="text" className="form-control mb-4" placeholder="Username" value={profile.username} onChange={this.updateUsername} />)
-                            : (<p className="lead mt-3"><strong>{profile.username}</strong></p>)}
-                        {/* <div className="lead mt-3">About Me</div> */}
+                            : (<p className="lead mt-3">{profile.username}</p>)}
+                        <div className="lead mt-3"><strong>About Me</strong></div>
                         {edit ? (<input type="text" className="form-control mb-4" placeholder="Bio" value={profile.bio} onChange={this.updateBio} />)
                           : (<p className="lead mt-3">{profile.bio}</p>)}
+                        <div className="lead mt-3"><strong>Avatar</strong></div>
+                        <p className="lead mt-3">{profile.avatar}</p>
                       </div>
                     </div>
                   </div>
@@ -136,7 +138,7 @@ class MyProfile extends React.Component {
                               </li>
                             </ul>
                             <div className="tab-content" id="myTabContent">
-                              <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><ProfileAvatars /></div>
+                              <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><ProfileAvatars getMyProfile={this.getMyProfile} profileId={profile.id} /></div>
                               <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><ProfileScores /></div>
                               <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
                             </div>
