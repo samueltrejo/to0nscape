@@ -67,7 +67,7 @@ class ProfileAvatars extends React.Component {
       zebra,
     };
     const writeAvatarCards = avatars.map(avatar => (
-      <AvatarCards key={avatar.id} avatar={avatar} avatarImages={avatarImages} />
+      <AvatarCards key={avatar.id} avatar={avatar} avatarImages={avatarImages} getMyProfile={this.props.getMyProfile} profileId={this.props.profileId} />
     ));
     return (
       <div className="ProfileAvatars mt-3">

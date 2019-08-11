@@ -6,6 +6,36 @@ import $ from 'jquery';
 import profileData from '../helpers/data/profile-data';
 import scoresData from '../helpers/data/scores-data';
 
+import beholder from '../images/beholder.svg';
+import bipolarbear from '../images/bipolarbear.svg';
+import biteybat from '../images/biteybat.svg';
+import burlybear from '../images/burlybear.svg';
+import cardinal from '../images/cardinal.svg';
+import chicken from '../images/chicken.svg';
+import dragonhead from '../images/dragonhead.svg';
+import frogglet from '../images/frogglet.svg';
+import giraffey from '../images/giraffey.svg';
+import goldenwhale from '../images/golden-whale.svg';
+import hawkster from '../images/hawkster.svg';
+import installball from '../images/installball.svg';
+import meowburt from '../images/meowburt.svg';
+import monkeyface from '../images/monkeyface.svg';
+import mrbuddy from '../images/mrbuddy.svg';
+import owlet from '../images/owlet.svg';
+import pazzo from '../images/pazzo.svg';
+import pelter from '../images/pelter.svg';
+import piggy from '../images/piggy.svg';
+import rammy from '../images/rammy.svg';
+import scratchpaw from '../images/scratchpaw.svg';
+import seahorse from '../images/seahorse.svg';
+import sherbert from '../images/sherbert.svg';
+import snailburt from '../images/snailburt.svg';
+import snoot from '../images/snoot.svg';
+import spiny from '../images/spiny.svg';
+import troll from '../images/troll.svg';
+import yeti from '../images/yeti.svg';
+import zebra from '../images/zebra.svg';
+
 class BlockMatrix extends React.Component {
   state = {
     obstacles: [],
@@ -255,13 +285,44 @@ class BlockMatrix extends React.Component {
   }
 
   render() {
+    const avatarImages = {
+      beholder,
+      bipolarbear,
+      biteybat,
+      burlybear,
+      cardinal,
+      chicken,
+      dragonhead,
+      frogglet,
+      giraffey,
+      goldenwhale,
+      hawkster,
+      installball,
+      meowburt,
+      monkeyface,
+      mrbuddy,
+      owlet,
+      pazzo,
+      pelter,
+      piggy,
+      rammy,
+      scratchpaw,
+      seahorse,
+      sherbert,
+      snailburt,
+      snoot,
+      spiny,
+      troll,
+      yeti,
+      zebra,
+    };
     return (
       <div className="BlockMatrix p-5 vh-100">
         <div className="game-screen h-100 bg-dark position-relative overflow-hidden">
           <div className="border bg-info position-absolute"></div>
           {this.state.obstacles}
 
-          <div className="player bg-white position-absolute"></div>
+          <div className="player position-absolute text-white" style={{ backgroundImage: `url(${avatarImages.goldenwhale})`, backgroundPosition: 'center top', backgroundSize: 'cover' }}></div>
           <div className="p-3 text-white position-absolute">Score: <span className="score">0</span></div>
           <div className="h-100 d-flex justify-content-center align-items-center"><div className="announcer display-1 text-white">3</div></div>
         </div>
