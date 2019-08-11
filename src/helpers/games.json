@@ -8,14 +8,14 @@
   },
   {
     "id": "game2",
-    "name": "Battleship",
+    "name": "Battleship (Unavailable)",
     "link": "/battleship",
     "image": "gameImage2",
     "description": "Strategy game against a computer, try to destroy all of the cpu's ships."
   },
   {
     "id": "game3",
-    "name": "Click Maestro",
+    "name": "Click Maestro (Unavailable)",
     "link": "/clickmaestro",
     "image": "gameImage3",
     "description": "A clicking game, see how many times you can click your mouse before the time runs out."

@@ -17,6 +17,12 @@ html, body, #root {
   width: 100%;
 }
 
+.carousel-backdrop {
+  background-color: rgba($color: black, $alpha: 0.5);
+  height: 100%;
+  width: 100%;
+}
+
 .HomeNavbar {
   z-index: 2;
 }

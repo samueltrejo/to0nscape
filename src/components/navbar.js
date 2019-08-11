@@ -42,7 +42,7 @@ class Navbar extends React.Component {
         <div className="navbar navbar-expand-lg navbar-dark bg-dark d-flex flex-column p-0 h-100">
 
           {carousel ? (<HomeCarousel />) : ('')}
-          {/* {carousel ? (<div className="backdrop position-absolute"></div>) : ('')} */}
+          {carousel ? (<div className="carousel-backdrop position-absolute"></div>) : ('')}
           {hero ? (<NavbarHero heroUrl={heroUrl} />) : ('')}
 
           <div className={carousel ? ('HomeNavbar container position-absolute') : ('HomeNavbar container position-absolute')}>
