@@ -4,20 +4,20 @@
     "name": "Our Games",
     "link": "/blockmatrix-startscreen",
     "image": "aboutImage1",
-    "description": "Lorem ipsum dolor sit am consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna."
+    "description": "Thank you for visiting to0nscape. Scroll down to check out our games, which are all built in house. Play by yourself or choose multiplayer to play with a friend"
   },
   {
     "id": "about2",
     "name": "About Us",
     "link": "/battleship",
     "image": "aboutImage2",
-    "description": "Lorem ipsum dolor sit am consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna."
+    "description": "The idea behind to0nscape is what inspired me to learn software development. It is a minigame website where you will be able to play countless minigames in singleplayer and multiplayer modes."
   },
   {
     "id": "about3",
     "name": "Forums",
     "link": "/clickmaestro",
     "image": "aboutImage3",
-    "description": "Lorem ipsum dolor sit am consectetuer adipiscing elit sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna."
+    "description": "Check out our forums, and see what the community has to say. Please feel welcome to start thread to point out bugs, improvement suggestions, or just share your thoughts."
   }
 ]
