@@ -39,6 +39,7 @@ import zebra from '../images/zebra.svg';
 class BlockMatrix extends React.Component {
   state = {
     obstacles: [],
+    profile: {},
   }
 
   // GAME PREPARATION
@@ -129,7 +130,6 @@ class BlockMatrix extends React.Component {
     if (ps <= 7) {
       ps += 0.07;
     }
-    console.error('os', os, 'ps', ps, 'sw', this.gameDefaultValues.gameScreenWidth);
     this.gameDefaultValues.obstacleDropSpeed = os;
     this.gameDefaultValues.playerMovementSpeed = ps;
   }
@@ -276,7 +276,22 @@ class BlockMatrix extends React.Component {
     $(window).on('resize', this.gameOver);
   }
 
+  // REACT STUFF
+
+  getMyProfile = () => {
+    if (this.props.authed) {
+      const { uid } = firebase.auth().currentUser;
+      profileData.getMyProfile(uid)
+        .then((profile) => {
+          this.setState({ profile });
+          setTimeout(() => this.setState({ loaded: true }), 1000);
+        })
+        .catch(error => console.error(error));
+    }
+  }
+
   componentDidMount() {
+    this.getMyProfile();
     this.launchGame();
   }
 
@@ -285,6 +300,7 @@ class BlockMatrix extends React.Component {
   }
 
   render() {
+    const { profile } = this.state;
     const avatarImages = {
       beholder,
       bipolarbear,
@@ -322,7 +338,7 @@ class BlockMatrix extends React.Component {
           <div className="border bg-info position-absolute"></div>
           {this.state.obstacles}
 
-          <div className="player position-absolute text-white" style={{ backgroundImage: `url(${avatarImages.goldenwhale})`, backgroundPosition: 'center top', backgroundSize: 'cover' }}></div>
+          <div className="player position-absolute text-white" style={{ backgroundImage: `url(${avatarImages[profile.avatar]})`, backgroundPosition: 'center top', backgroundSize: 'cover' }}></div>
           <div className="p-3 text-white position-absolute">Score: <span className="score">0</span></div>
           <div className="h-100 d-flex justify-content-center align-items-center"><div className="announcer display-1 text-white">3</div></div>
         </div>

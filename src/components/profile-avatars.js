@@ -72,6 +72,7 @@ class ProfileAvatars extends React.Component {
     return (
       <div className="ProfileAvatars mt-3">
         <div className="lead text-center"><strong>My Avatars</strong></div>
+        <div className="text-center">Click to change avatars</div>
         <div className="d-flex flex-wrap">
           {writeAvatarCards}
         </div>
