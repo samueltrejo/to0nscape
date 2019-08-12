@@ -8,6 +8,8 @@ import $ from 'jquery';
 import HomeCarousel from './home-carousel';
 import NavbarHero from './navbar-hero';
 
+import logo from '../images/ts-logo-white.png';
+
 class Navbar extends React.Component {
   componentDidMount() {
     $('.carousel').carousel({
@@ -46,7 +48,7 @@ class Navbar extends React.Component {
           {hero ? (<NavbarHero heroUrl={heroUrl} />) : ('')}
 
           <div className={carousel ? ('HomeNavbar container position-absolute') : ('HomeNavbar container position-absolute')}>
-            <Link to="/home" className="font-weight-bold text-aqua navbar-brand"><i className="fas fa-home"></i> To0nscape</Link>
+            <Link to="/home" className="font-weight-bold text-aqua navbar-brand"><img className="logo" src={logo} alt="" /> To0nscape</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
