@@ -34,7 +34,19 @@ class Leaderboards extends React.Component {
   getScores = () => {
     scoresData.getScores()
       .then((scores) => {
-        this.setState({ scores });
+        const sortedScores = scores.sort((a, b) => {
+          const scoreA = a.score;
+          const scoreB = b.score;
+
+          let comparison = 0;
+          if (scoreA > scoreB) {
+            comparison = -1;
+          } else if (scoreA < scoreB) {
+            comparison = 1;
+          }
+          return comparison;
+        });
+        this.setState({ scores: sortedScores });
         this.getScoreCategories();
       })
       .catch(error => console.error(error));
@@ -71,39 +83,50 @@ class Leaderboards extends React.Component {
     const writeScoreCategories = scoreCategories.map(category => (
       <span key={category} className="dropdown-item" onClick={this.setScoreCategory}>{category}</span>
     ));
+    let counter = 1;
     const writeScores = scores.map((score) => {
-      let scoreElement = '';
+      let scoreElement;
       if (score.game.includes(scoreCategory)) {
-        scoreElement = <li key={score.id} className="list-group-item">{score.username}, {score.score}</li>;
+        scoreElement = <tr key={score.id}><td>{counter}</td><td>{score.username}</td><td>{score.score}</td></tr>;
+        counter += 1;
       }
       return scoreElement;
     });
     return (
-      <div className="Leaderboards">
+      <div className="Leaderboards h-100">
         <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
           <LoadingScreen />
         </div>
 
         <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
           <Navbar authed={true} carousel={false} hero={true} profile={profile} heroUrl={heroUrl} />
-          <h3>Leaderboards</h3>
+          <div className="container display-4 pt-3">Leaderboards</div>
 
           <div className="container mt-5">
-            <div className="card">
+            <div className="card bg-dark">
               <div className="card-body">
-                <div className="dropdown">
-              <h5 className="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span className="border-bottom border-dark">{scoreCategory}</span>
-              </h5>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                {writeScoreCategories}
+                <div className="dropdown text-center">
+                  <h5 className="btn btn-dark dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span className="">{scoreCategory}</span>
+                  </h5>
+                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {writeScoreCategories}
+                  </div>
+                </div>
+
+                <table className="table table-dark">
+                  <thead>
+                    <tr>
+                      <th scope="col">Rank</th>
+                      <th scope="col">Player</th>
+                      <th scope="col">Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {writeScores}
+                  </tbody>
+                </table>
               </div>
-            </div>
-              </div>
-              <ul className="list-group list-group-flush">
-                {writeScores}
-              </ul>
-              <div className="card-body"></div>
             </div>
           </div>
           <Footer />
