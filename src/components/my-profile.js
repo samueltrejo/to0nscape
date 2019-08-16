@@ -88,7 +88,7 @@ class MyProfile extends React.Component {
               <div className="container">
                 <div className="row w-100">
 
-                  <div className="col-4 w-100">
+                  <div className="col-md-12 col-lg-4 w-100 order-12 order-lg-1">
                     <div className="card profile-card rounded-0 border-0">
                       {edit ? (<div className="m-4"><input type="text" className="w-100 form-control mb-4" placeholder="Profile Picture" value={profile.image} onChange={this.updateImage} /></div>)
                         : (<img src={profile.image} className="card-img-top rounded-0" alt="..." />)}
@@ -105,7 +105,7 @@ class MyProfile extends React.Component {
                     </div>
                   </div>
 
-                  <div className="col-8 mt-5">
+                  <div className="col-md-12 col-lg-8 mt-5 order-1 order-lg-12 mb-5">
                     <div className="d-flex justify-content-between">
                       <div className="display-4 text-white"><strong>{profile.username}</strong></div>
                       <div>
