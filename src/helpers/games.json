@@ -8,8 +8,8 @@
   },
   {
     "id": "game2",
-    "name": "Battleship (Unavailable)",
-    "link": "/battleship",
+    "name": "Battleship",
+    "link": "/battleship-startscreen",
     "image": "gameImage2",
     "description": "Strategy game against a computer, try to destroy all of the cpu's ships."
   },

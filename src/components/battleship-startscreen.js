@@ -13,7 +13,7 @@ import heroUrl from '../images/games-card1.jpg';
 import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
 
-class BlockMatrixStartscreen extends React.Component {
+class BattleshipStartscreen extends React.Component {
   state = {
     profile: {},
     lobbyCode: '',
@@ -85,7 +85,7 @@ class BlockMatrixStartscreen extends React.Component {
   render() {
     const { profile, loaded } = this.state;
     return (
-      <div className="BlockMatrixStartscreen h-100 position-relative">
+      <div className="BattleshipStartscreen h-100 position-relative">
         <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
           <LoadingScreen />
         </div>
@@ -94,19 +94,19 @@ class BlockMatrixStartscreen extends React.Component {
           <Navbar authed={true} hero={true} profile={profile} heroUrl={heroUrl} />
           <div id="start-screen" className="col-4 mx-auto mt-5">
             <div className="modal-content">
-              <h1 className="display-4 mx-auto mb-0 mt-3">Block Matrix</h1>
+              <h1 className="display-4 mx-auto mb-0 mt-3">Battleship</h1>
               <h6 className="m-auto">by <a className="text-muted" href="https://github.com/samueltrejo" rel="noopener noreferrer" target="_blank">@samueltrejo</a></h6>
               <div className="modal-body">
-                <div className="text-center">Use left and right arrows to dodge the obstacles. Have fun!</div>
+                <div className="text-center">Strategy game against a computer, try to destroy all of your enemy's ships.</div>
               </div>
               <div className="modal-footer justify-content-center flex-column">
                 {Object.keys(profile).length
                   ? (<div className="d-flex">
-                      <Link to="/battleship" type="button" className="btn btn-dark rounded mr-3">Start Game</Link>
-                      <button type="button" className="multiplayer-btn btn btn-dark rounded" data-toggle="collapse" data-target="#multiplayer-info">Multiplayer</button>
-                      </div>)
+                    <Link to="/battleship" type="button" className="btn btn-dark rounded mr-3">Start Game</Link>
+                    <button type="button" className="multiplayer-btn btn btn-dark rounded" data-toggle="collapse" data-target="#multiplayer-info">Multiplayer</button>
+                  </div>)
                   : (<span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="You must create a profile to play this game.">
-                  <button className="btn btn-dark tooltip-btn" type="button" disabled>Start Game</button></span>)}
+                    <button className="btn btn-dark tooltip-btn" type="button" disabled>Start Game</button></span>)}
 
                 <div className="collapse mt-3" id="multiplayer-info">
                   <div className="card card-body">
@@ -130,4 +130,4 @@ class BlockMatrixStartscreen extends React.Component {
   }
 }
 
-export default BlockMatrixStartscreen;
+export default BattleshipStartscreen;
