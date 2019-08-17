@@ -1,3 +1,44 @@
+$board-width: 400px;
+$space-width: $board-width / 8;
+$space-height: $space-width;
+
+.board {
+  width: $board-width;
+}
+
+.ship {
+  cursor: pointer;
+}
+.ship:hover {
+  background: lightgray;
+}
+
+.space {
+  width: $space-width;
+  height: $space-height;
+  border: 1px solid black;
+}
+
+.enemy-board {
+  width: $board-width;
+}
+
+.enemy-space {
+  width: $space-width;
+  height: $space-height;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.bg-black {
+  background-color: black;
+}
+
+.z-1 {
+  z-index: 1;
+  opacity: 0.8;
+}
+
 html, body, #root {
   height: 100%;
   background-color: whitesmoke;

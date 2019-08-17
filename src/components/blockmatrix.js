@@ -159,18 +159,21 @@ class BlockMatrix extends React.Component {
 
   movePlayer = (event) => {
     const { keyCode } = event;
-    if (keyCode === 37) {
+    if (keyCode === 37 || keyCode === 65) {
       this.gameDefaultValues.moveStateLeft = true;
-    } else if (keyCode === 39) {
+    } else if (keyCode === 39 || keyCode === 68) {
       this.gameDefaultValues.moveStateRight = true;
     }
   }
 
   stopPlayer = (event) => {
     const { keyCode } = event;
-    if (keyCode === 37) {
+    if (keyCode === 37 || keyCode === 65) {
       this.gameDefaultValues.moveStateLeft = false;
-    } else if (keyCode === 39) {
+    } else if (keyCode === 39 || keyCode === 68) {
+      this.gameDefaultValues.moveStateRight = false;
+    } else if (keyCode === 0) {
+      this.gameDefaultValues.moveStateLeft = false;
       this.gameDefaultValues.moveStateRight = false;
     }
   }

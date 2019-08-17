@@ -102,7 +102,7 @@ class BlockMatrixStartscreen extends React.Component {
               <div className="modal-footer justify-content-center flex-column">
                 {Object.keys(profile).length
                   ? (<div className="d-flex">
-                      <Link to="/battleship" type="button" className="btn btn-dark rounded mr-3">Start Game</Link>
+                      <Link to="/blockmatrix" type="button" className="btn btn-dark rounded mr-3">Start Game</Link>
                       <button type="button" className="multiplayer-btn btn btn-dark rounded" data-toggle="collapse" data-target="#multiplayer-info">Multiplayer</button>
                       </div>)
                   : (<span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="You must create a profile to play this game.">
