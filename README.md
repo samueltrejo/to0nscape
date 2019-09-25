@@ -1,8 +1,10 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# To0nscape - Minigame App
+This web application was created for competitive minigame lovers, to play minigames in single or multiplayer and compare there scores against others.
 
-## Available Scripts
-
-In the project directory, you can run:
+### User Guide:
+1. Log in with your google account and create a profile.
+2. Go down to the games section on the home page.
+3. Log out to end user session.
 
 ### `npm start`
 
