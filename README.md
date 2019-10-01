@@ -1,12 +1,13 @@
 # To0nscape - Minigame App
 This web application was created for competitive minigame lovers, to play minigames in single or multiplayer and compare there scores against others.
 
-### User Guide:
+## User Guide:
 1. Log in with your google account and create a profile.
-2. Go down to the games section on the home page.
-3. Log out to end user session.
+2. Go down to the games section on the home page and choose one of the available minigames.
+3. Choose singleplayer or multiplayer to start playing.
+4. Enjoy!
 
-### `npm start`
+## `npm start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
