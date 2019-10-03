@@ -9,8 +9,8 @@ This web application was created for competitive minigame lovers, to play miniga
 4. Enjoy!
 ```
 ## Screenshots
-![image of to0nscape]()
-![image of to0nscape]()
+![image of to0nscape](https://raw.githubusercontent.com/samueltrejo/to0nscape/master/screenshots/home-jumbo.png)
+![image of to0nscape](https://raw.githubusercontent.com/samueltrejo/to0nscape/master/screenshots/home-games.png)
 
 ## Running Locally
 ```
