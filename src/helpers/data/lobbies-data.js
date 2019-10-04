@@ -1,5 +1,5 @@
 import axios from 'axios';
-import fbconfig from '../fbconfig.json';
+import fbconfig from '../fbconfig';
 
 const databaseUrl = fbconfig.databaseURL;
 

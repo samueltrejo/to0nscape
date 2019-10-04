@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 
-import fbconfig from './fbconfig.json';
+import fbconfig from './fbconfig';
 
 const initFirebase = () => {
   firebase.initializeApp(fbconfig);
