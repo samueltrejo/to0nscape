@@ -2,7 +2,6 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 
-import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
 import ProfileAvatars from './profile-avatars';
 import ProfileScores from './profile-scores';
@@ -13,8 +12,6 @@ import profileData from '../helpers/data/profile-data';
 class MyProfile extends React.Component {
   state = {
     edit: false,
-    profile: {},
-    loaded: false,
   }
 
   getMyProfile = () => {
@@ -73,15 +70,12 @@ class MyProfile extends React.Component {
   updateBio = event => this.stateProfileChange('bio', event)
 
   render() {
-    const { profile, edit, loaded } = this.state;
+    const { edit } = this.state;
+    const { authed, profile } = this.props;
     return (
       <div className="Profile h-100">
-        <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
-          <LoadingScreen />
-        </div>
-
-        <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
-          <Navbar authed={this.props.authed} carousel={false} profile={profile} hero={true} heroUrl={profile.hero} />
+        <div className="app-content h-100">
+          <Navbar authed={authed} carousel={false} profile={profile} hero={true} heroUrl={profile.hero} />
 
           <div className="position-relative w-100">
             <div className="profile-image-container position-absolute w-100">

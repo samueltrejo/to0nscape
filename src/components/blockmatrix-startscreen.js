@@ -1,36 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 import 'firebase/database';
 
 import $ from 'jquery';
 
-import profileData from '../helpers/data/profile-data';
 import lobbiesData from '../helpers/data/lobbies-data';
 import heroUrl from '../images/games-card1.jpg';
 
-import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
 
 class BlockMatrixStartscreen extends React.Component {
   state = {
-    profile: {},
     lobbyCode: '',
     lobbyInputValue: '',
-    loaded: false,
-  }
-
-  getMyProfile = () => {
-    if (this.props.authed) {
-      const { uid } = firebase.auth().currentUser;
-      profileData.getMyProfile(uid)
-        .then((profile) => {
-          this.setState({ profile });
-          setTimeout(() => this.setState({ loaded: true }), 1000);
-        })
-        .catch(error => console.error(error));
-    }
   }
 
   generateLobbyCode = (length) => {
@@ -83,15 +65,11 @@ class BlockMatrixStartscreen extends React.Component {
   }
 
   render() {
-    const { profile, loaded } = this.state;
+    const { authed, profile } = this.props;
     return (
       <div className="BlockMatrixStartscreen h-100 position-relative">
-        <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
-          <LoadingScreen />
-        </div>
-
-        <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
-          <Navbar authed={true} hero={true} profile={profile} heroUrl={heroUrl} />
+        <div className="app-content h-100">
+          <Navbar authed={authed} hero={true} profile={profile} heroUrl={heroUrl} />
           <div id="start-screen" className="col-4 mx-auto mt-5">
             <div className="modal-content">
               <h1 className="display-4 mx-auto mb-0 mt-3">Block Matrix</h1>

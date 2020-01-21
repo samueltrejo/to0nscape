@@ -1,34 +1,15 @@
 import React from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-
-import profileData from '../helpers/data/profile-data';
 import scoresData from '../helpers/data/scores-data';
 import heroUrl from '../images/leaderboards.jpg';
 
-import LoadingScreen from './loading-screen';
 import Navbar from './navbar';
 import Footer from './footer';
 
 class Leaderboards extends React.Component {
   state = {
-    profile: {},
     scores: [],
     scoreCategories: [],
     scoreCategory: 'Block Matrix',
-    loaded: false,
-  }
-
-  getMyProfile = () => {
-    if (this.props.authed) {
-      const { uid } = firebase.auth().currentUser;
-      profileData.getMyProfile(uid)
-        .then((profile) => {
-          this.setState({ profile });
-          setTimeout(() => this.setState({ loaded: true }), 1000);
-        })
-        .catch(error => console.error(error));
-    }
   }
 
   getScores = () => {
@@ -74,12 +55,11 @@ class Leaderboards extends React.Component {
 
   render() {
     const {
-      profile,
       scoreCategories,
       scoreCategory,
       scores,
-      loaded,
     } = this.state;
+    const { authed, profile } = this.props;
     const writeScoreCategories = scoreCategories.map(category => (
       <span key={category} className="dropdown-item" onClick={this.setScoreCategory}>{category}</span>
     ));
@@ -94,12 +74,8 @@ class Leaderboards extends React.Component {
     });
     return (
       <div className="Leaderboards h-100">
-        <div className={loaded ? ('app-loading h-100 invisible fixed-top') : ('LoadingScreen h-100 fixed-top')}>
-          <LoadingScreen />
-        </div>
-
-        <div className={loaded ? ('app-content h-100') : ('app-content h-100 invisible')}>
-          <Navbar authed={true} carousel={false} hero={true} profile={profile} heroUrl={heroUrl} />
+        <div className="app-content h-100">
+          <Navbar authed={authed} carousel={false} hero={true} profile={profile} heroUrl={heroUrl} />
           <div className="container display-4 pt-3">Leaderboards</div>
 
           <div className="container mt-5">

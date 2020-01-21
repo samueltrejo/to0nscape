@@ -10,6 +10,8 @@ import 'firebase/auth';
 
 import initFirebase from './helpers/firebase-init';
 
+import profileData from './helpers/data/profile-data';
+
 import Home from './components/home';
 import NewProfile from './components/new-profile';
 import MyProfile from './components/my-profile';
@@ -39,42 +41,52 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 class App extends React.Component {
   state = {
     authed: false,
-    loaded: false,
+    profile: null,
+  }
+
+  getProfile = () => {
+    if (this.state.authed) {
+      const { uid } = firebase.auth().currentUser;
+      profileData.getMyProfile(uid)
+        .then((profile) => {
+          this.setState({ profile });
+        })
+        .catch(error => console.error(error));
+    }
   }
 
   componentDidMount() {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ authed: true });
-        setTimeout(() => this.setState({ loaded: true }), 1000);
       } else {
-        this.setState({ authed: false });
-        setTimeout(() => this.setState({ loaded: true }), 1000);
+        this.setState({ authed: false, profile: null });
       }
     });
   }
 
   componentWillUnmount() {
     this.removeListener();
+    this.getProfile();
   }
 
   render() {
-    const { authed } = this.state;
+    const { authed, profile } = this.state;
 
     return (
       <div className="App h-100">
         <BrowserRouter>
           <React.Fragment>
             <Switch>
-              <PublicRoute path="/auth" component={Home} authed={authed} />
-              <PrivateRoute path="/home" component={Home} authed={authed} />
+              <PublicRoute path="/auth" component={Home} authed={authed} profile={profile} />
+              <PrivateRoute path="/home" component={Home} authed={authed} profile={profile} />
 
-              <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} />
-              <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} />
-              <PrivateRoute path="/profile/:username" component={MyProfile} authed={authed} />
-              <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} />
-              <PrivateRoute path="/blockmatrix/:lobby" component={BlockMatrixMultiplayer} authed={authed} />
-              <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} />
+              <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} profile={profile} />
+              <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} profile={profile} />
+              <PrivateRoute path="/profile/:username" component={MyProfile} authed={authed} profile={profile} getProfile={this.getProfile} />
+              <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} profile={profile} />
+              <PrivateRoute path="/blockmatrix/:lobby" component={BlockMatrixMultiplayer} authed={authed} profile={profile} />
+              <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} profile={profile} />
 
               <Redirect from="*" to="/auth" />
             </Switch>

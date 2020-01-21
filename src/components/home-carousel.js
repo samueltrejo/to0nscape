@@ -1,53 +1,11 @@
 import React from 'react';
 
-import jokesData from '../helpers/data/jokes-data';
-
 import imageFrame from '../images/image-frame.jpg';
 import homeImage1 from '../images/home1.jpg';
 import homeImage2 from '../images/home2.jpg';
 import homeImage3 from '../images/home3.jpg';
 
 class HomeCarousel extends React.Component {
-  mounted = false;
-
-  state = {
-    randomJoke1: {
-      setup: '',
-      punchline: '',
-    },
-    randomJoke2: {
-      setup: '',
-      punchline: '',
-    },
-    randomJoke3: {
-      setup: '',
-      punchline: '',
-    },
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-    jokesData.getJoke().then((resonse) => {
-      if (this.mounted) {
-        this.setState({ randomJoke1: resonse.data });
-      }
-    }).catch(error => console.error(error));
-    jokesData.getJoke().then((resonse) => {
-      if (this.mounted) {
-        this.setState({ randomJoke2: resonse.data });
-      }
-    }).catch(error => console.error(error));
-    jokesData.getJoke().then((resonse) => {
-      if (this.mounted) {
-        this.setState({ randomJoke3: resonse.data });
-      }
-    }).catch(error => console.error(error));
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
   render() {
     return (
       <div className="mx-0 h-100">

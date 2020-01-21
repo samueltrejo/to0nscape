@@ -36,7 +36,7 @@ class Navbar extends React.Component {
       hero,
       heroUrl,
     } = this.props;
-    const profileLink = Object.keys(profile).length ? (<Link to={`/profile/${profile.username}`} className="nav-item nav-link"><i className="fas fa-user-ninja"></i> Profile</Link>)
+    const profileLink = profile ? (<Link to={`/profile/${profile.username}`} className="nav-item nav-link"><i className="fas fa-user-ninja"></i> Profile</Link>)
       : (<Link to="/new-profile" className="nav-item nav-link"><i className="fas fa-user-ninja"></i> Profile</Link>);
 
     return (
