@@ -75,7 +75,7 @@ class MyProfile extends React.Component {
     return (
       <div className="Profile h-100">
         <div className="app-content h-100">
-          <Navbar authed={authed} carousel={false} profile={profile} hero={true} heroUrl={profile.hero} />
+          {/* <Navbar authed={authed} carousel={false} profile={profile} hero={true} heroUrl={profile.hero} /> */}
 
           <div className="position-relative w-100">
             <div className="profile-image-container position-absolute w-100">

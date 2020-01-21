@@ -75,7 +75,7 @@ class Leaderboards extends React.Component {
     return (
       <div className="Leaderboards h-100">
         <div className="app-content h-100">
-          <Navbar authed={authed} carousel={false} hero={true} profile={profile} heroUrl={heroUrl} />
+          {/* <Navbar authed={authed} carousel={false} hero={true} profile={profile} heroUrl={heroUrl} /> */}
           <div className="container display-4 pt-3">Leaderboards</div>
 
           <div className="container mt-5">

@@ -20,6 +20,8 @@ import BlockMatrix from './components/blockmatrix';
 import BlockMatrixMultiplayer from './components/blockmatrix-multiplayer';
 import Leaderboards from './components/leaderboards';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
 import './styles/app.scss';
 
 initFirebase();
@@ -47,8 +49,10 @@ class App extends React.Component {
   getProfile = () => {
     if (this.state.authed) {
       const { uid } = firebase.auth().currentUser;
+      console.error(uid)
       profileData.getMyProfile(uid)
         .then((profile) => {
+          console.error(profile);
           this.setState({ profile });
         })
         .catch(error => console.error(error));
@@ -59,6 +63,7 @@ class App extends React.Component {
     this.removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({ authed: true });
+        this.getProfile();
       } else {
         this.setState({ authed: false, profile: null });
       }
@@ -67,7 +72,6 @@ class App extends React.Component {
 
   componentWillUnmount() {
     this.removeListener();
-    this.getProfile();
   }
 
   render() {

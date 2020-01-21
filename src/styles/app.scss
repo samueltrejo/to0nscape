@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Bangers|Teko&display=swap');
+
 html, body, #root {
   height: 100%;
   background-color: whitesmoke;
@@ -23,8 +25,14 @@ html, body, #root {
   width: 100%;
 }
 
-.HomeNavbar {
-  z-index: 2;
+.navigation {
+  .brand {
+    font-family: 'Bangers', cursive;
+  }
+  
+  .navbar-nav {
+    font-family: 'Teko', sans-serif;
+  }
 }
 
 .fs-2 {

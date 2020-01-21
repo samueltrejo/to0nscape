@@ -69,7 +69,7 @@ class BlockMatrixStartscreen extends React.Component {
     return (
       <div className="BlockMatrixStartscreen h-100 position-relative">
         <div className="app-content h-100">
-          <Navbar authed={authed} hero={true} profile={profile} heroUrl={heroUrl} />
+          {/* <Navbar authed={authed} hero={true} profile={profile} heroUrl={heroUrl} /> */}
           <div id="start-screen" className="col-4 mx-auto mt-5">
             <div className="modal-content">
               <h1 className="display-4 mx-auto mb-0 mt-3">Block Matrix</h1>

@@ -21,24 +21,24 @@ class HomeCarousel extends React.Component {
                 <img src={imageFrame} className="carousel-image w-100 h-100" alt="by JESHOOTS.COM on Unsplash" onLoad={this.props.contentLoaded} />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>Welcome to To0nscape!</h5>
-                  <p>{this.state.randomJoke1.setup}</p>
-                  <p>{this.state.randomJoke1.punchline}</p>
+                  {/* <p>{this.state.randomJoke1.setup}</p>
+                  <p>{this.state.randomJoke1.punchline}</p> */}
                 </div>
               </div>
               <div className="carousel-item h-100" style={{ backgroundImage: `url(${homeImage2})`, backgroundPosition: 'center top', backgroundSize: 'cover' }}>
                 <img src={imageFrame} className="carousel-image w-100 h-100" alt="by Sean Do on Unsplash" onLoad={this.props.contentLoaded} />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>This app has 1 minigame at the moment.</h5>
-                  <p>{this.state.randomJoke2.setup}</p>
-                  <p>{this.state.randomJoke2.punchline}</p>
+                  {/* <p>{this.state.randomJoke2.setup}</p>
+                  <p>{this.state.randomJoke2.punchline}</p> */}
                 </div>
               </div>
               <div className="carousel-item h-100" style={{ backgroundImage: `url(${homeImage3})`, backgroundPosition: 'center top', backgroundSize: 'cover' }}>
                 <img src={imageFrame} className="carousel-image w-100 h-100" alt="by Florian Olivo on Unsplash" onLoad={this.props.contentLoaded} />
                 <div className="carousel-caption d-none d-md-block">
                   <h5>Enjoy the jokes, create a profile and have fun!</h5>
-                  <p>{this.state.randomJoke3.setup}</p>
-                  <p>{this.state.randomJoke3.punchline}</p>
+                  {/* <p>{this.state.randomJoke3.setup}</p>
+                  <p>{this.state.randomJoke3.punchline}</p> */}
                 </div>
               </div>
             </div>

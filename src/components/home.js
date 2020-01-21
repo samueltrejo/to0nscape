@@ -11,7 +11,7 @@ class Home extends React.Component {
     return (
       <div className="Home h-100">
         <div className="app-content h-100">
-          <Navbar authed={authed} profile={profile} carousel={true} />
+          <Navbar authed={authed} profile={profile} />
           <HomeAbout />
           <HomeGames />
           <Footer />
