@@ -7,6 +7,7 @@ import 'firebase/auth';
 import {
   Collapse,
   // Dropdown,
+  Media,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -23,7 +24,7 @@ import {
 // import HomeCarousel from './home-carousel';
 // import NavbarHero from './navbar-hero';
 
-// import logo from '../images/ts-logo-white.png';
+import logo from '../images/ts-logo-white.png';
 
 
 const Navigation = (props) => {
@@ -47,12 +48,9 @@ const Navigation = (props) => {
       <DropdownToggle nav caret>
         {props.profile.username ? (props.profile.username) : (firebase.auth().currentUser.email)}
       </DropdownToggle>
-      <DropdownMenu style={{background: 'linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5))'}} right>
-        <DropdownItem tag={RouteLink} to="/profile">
+      <DropdownMenu right>
+        <DropdownItem tag={RouteLink} to={`/profile/${props.profile.username}`}>
           Profile
-        </DropdownItem>
-        <DropdownItem tag={RouteLink} to="/my-songs">
-          Songs
         </DropdownItem>
         <DropdownItem divider />
         <DropdownItem onClick={logoutClickEvent}>
@@ -64,15 +62,18 @@ const Navigation = (props) => {
   return (
     <div className="navigation fixed-top">
       <Navbar className="container w-100" color="dark" dark expand="md">
-        <NavbarBrand className="brand lead" tag={RouteLink} to="/"><div className="display-4">Chordcraft</div></NavbarBrand>
+        <NavbarBrand className="brand d-flex" tag={RouteLink} to="/">
+          <Media className="logo my-auto mr-1" src={logo} />
+          <div className="brand-text">To0nscape</div>
+        </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto lead" navbar>
             <NavItem>
-              <NavLink tag={RouteLink} to={props.authed ? ("/song") : ("/login-options")}>+Song</NavLink>
+              <NavLink tag={RouteLink} to="/leaderboards">Leaderboards</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RouteLink} to="/song-library">Song Library</NavLink>
+              <NavLink tag={RouteLink} to="/forums">Forums</NavLink>
             </NavItem>
             {loginOptions}
           </Nav>

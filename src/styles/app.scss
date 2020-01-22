@@ -1,12 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Bangers|Teko&display=swap');
 
 html, body, #root {
-  height: 100%;
   background-color: whitesmoke;
-}
-
-.carousel-image  {
-  opacity: 0;
 }
 
 .home-images {
@@ -279,7 +274,11 @@ a.btn {
 }
 
 .logo {
-  width: 3rem;
+  width: 2rem;
+  height: 2rem;
+}
+.brand-text {
+  font-size: 2rem;
 }
 
 @keyframes rotate1 {

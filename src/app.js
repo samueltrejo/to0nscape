@@ -19,6 +19,7 @@ import BlockMatrixStartscreen from './components/blockmatrix-startscreen';
 import BlockMatrix from './components/blockmatrix';
 import BlockMatrixMultiplayer from './components/blockmatrix-multiplayer';
 import Leaderboards from './components/leaderboards';
+import Page404 from './components/page404';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
@@ -26,16 +27,16 @@ import './styles/app.scss';
 
 initFirebase();
 
-const PublicRoute = ({ component: Component, authed, ...rest }) => {
-  const routeChecker = props => (authed === false
-    ? (<Component authed={authed} {...props} />)
-    : (<Redirect to={{ pathname: '/home', state: { from: props.location } }} />));
-  return <Route {...rest} render={props => routeChecker(props)} />;
-};
+// const PublicRoute = ({ component: Component, authed, ...rest }) => {
+//   const routeChecker = props => (authed === false
+//     ? (<Component authed={authed} {...props} {...rest} />)
+//     : (<Redirect to={{ pathname: '/', state: { from: props.location } }} />));
+//   return <Route {...rest} render={props => routeChecker(props)} />;
+// };
 
 const PrivateRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = props => (authed === true
-    ? (<Component authed={authed} {...props} />)
+    ? (<Component authed={authed} {...props} {...rest} />)
     : (<Redirect to={{ pathname: '/auth', state: { from: props.location } }} />));
   return <Route {...rest} render={props => routeChecker(props)} />;
 };
@@ -49,7 +50,6 @@ class App extends React.Component {
   getProfile = () => {
     if (this.state.authed) {
       const { uid } = firebase.auth().currentUser;
-      console.error(uid)
       profileData.getMyProfile(uid)
         .then((profile) => {
           console.error(profile);
@@ -76,23 +76,25 @@ class App extends React.Component {
 
   render() {
     const { authed, profile } = this.state;
-
     return (
-      <div className="App h-100">
+      <div className="App">
         <BrowserRouter>
           <React.Fragment>
             <Switch>
-              <PublicRoute path="/auth" component={Home} authed={authed} profile={profile} />
-              <PrivateRoute path="/home" component={Home} authed={authed} profile={profile} />
+              <Route exact path="/"><Home authed={authed} profile={profile} /></Route>
+              {/* <Route path="/leaderboards"><Leaderboards component={Leaderboards} authed={authed} profile={profile} /></Route> */}
 
-              <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} profile={profile} />
-              <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} profile={profile} />
-              <PrivateRoute path="/profile/:username" component={MyProfile} authed={authed} profile={profile} getProfile={this.getProfile} />
-              <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} profile={profile} />
-              <PrivateRoute path="/blockmatrix/:lobby" component={BlockMatrixMultiplayer} authed={authed} profile={profile} />
-              <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} profile={profile} />
+              <Route><Page404 /></Route>
+              {/* <PublicRoute path="/" component={Home} authed={authed} profile={profile} /> */}
 
-              <Redirect from="*" to="/auth" />
+              {/* <PrivateRoute path="/leaderboards" component={Leaderboards} authed={authed} profile={profile} /> */}
+              {/* <PrivateRoute path="/new-profile" component={NewProfile} authed={authed} profile={profile} /> */}
+              {/* <PrivateRoute path="/profile/:username" component={MyProfile} authed={authed} profile={profile} getProfile={this.getProfile} /> */}
+              {/* <PrivateRoute path="/blockmatrix-startscreen" component={BlockMatrixStartscreen} authed={authed} profile={profile} /> */}
+              {/* <PrivateRoute path="/blockmatrix/:lobby" component={BlockMatrixMultiplayer} authed={authed} profile={profile} /> */}
+              {/* <PrivateRoute path="/blockmatrix" component={BlockMatrix} authed={authed} profile={profile} /> */}
+
+              {/* <Redirect from="*" to="/auth" /> */}
             </Switch>
           </React.Fragment>
         </BrowserRouter>
