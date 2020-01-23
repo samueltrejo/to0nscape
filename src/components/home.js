@@ -1,38 +1,81 @@
-import React from 'react';
-import { Jumbotron } from 'reactstrap';
+import React, { useState } from 'react';
+import {
+  Carousel,
+  CarouselCaption,
+  CarouselControl,
+  CarouselIndicators,
+  CarouselItem,
+  Jumbotron
+} from 'reactstrap';
 
 import Navbar from './navbar';
 // import HomeAbout from './home-about';
 // import HomeGames from './home-games';
 // import Footer from './footer';
 
-// import homeImage1 from '../images/home1.jpg';
-// import homeImage2 from '../images/home2.jpg';
-// import homeImage3 from '../images/home3.jpg';
+import homeImage1 from '../images/home1.jpg';
+import homeImage2 from '../images/home2.jpg';
+import homeImage3 from '../images/home3.jpg';
 
-class Home extends React.Component {
-  render() {
-    const { authed, profile } = this.props;
-    return (
-      <div className="Home">
-        <Navbar authed={authed} profile={profile} />
-        {/* <Jumbotron className="h-75 rounded-0" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${instrumentsImg})`,
-          backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
-          <div className="container text-light mt-5">
-            <h1 className="display-4 text-center">Welcome to Chordcraft!</h1>
-            <p className="lead mx-5">A tool and creative playground to help you do what you do best. This tool is a top-notch editor for creating song chords and lyrics. Click the button below to get started.</p>
-            <hr className="bg-light my-2 w-75" />
-            <p className="lead text-center">
-              <Button className="bg-transparent text-light" color="light">Getting Started</Button>
-            </p>
-          </div>
-        </Jumbotron> */}
-        {/* <HomeAbout /> */}
-        {/* <HomeGames /> */}
-        {/* <Footer /> */}
-      </div>
-    );
+const items = [
+  {
+    src: homeImage1,
+    altText: 'Slide 1',
+    caption: 'Slide 1'
+  },
+  {
+    src: homeImage2,
+    altText: 'Slide 2',
+    caption: 'Slide 2'
+  },
+  {
+    src: homeImage3,
+    altText: 'Slide 3',
+    caption: 'Slide 3'
   }
+];
+
+const Home = (props) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  const slides = items.map((item) => {
+    return (
+      <CarouselItem className="w-100 h-75" onExiting={() => setAnimating(true)} onExited={() => setAnimating(false)} key={item.src} >
+        <img className="w-100 h-75" src={item.src} alt={item.altText} />
+        <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+      </CarouselItem>
+    );
+  });
+
+  const next = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+    setActiveIndex(nextIndex);
+  }
+
+  const previous = () => {
+    if (animating) return;
+    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+    setActiveIndex(nextIndex);
+  }
+
+  const goToIndex = (newIndex) => {
+    if (animating) return;
+    setActiveIndex(newIndex);
+  }
+
+  return (
+    <div className="Home vh-100">
+      <Navbar authed={props.authed} profile={props.profile} />
+      <Carousel className="w-100 h-75" activeIndex={activeIndex} next={next} previous={previous} >
+        <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
+        {slides}
+        <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
+        <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
+      </Carousel>
+    </div>
+  );
 }
 
 export default Home;

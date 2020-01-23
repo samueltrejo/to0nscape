@@ -4,6 +4,12 @@ html, body, #root {
   background-color: whitesmoke;
 }
 
+.Home {
+  .carousel-inner {
+    height: 75%;
+  }
+}
+
 .home-images {
   height: 250px;
 }
